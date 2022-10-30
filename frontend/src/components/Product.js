@@ -1,9 +1,10 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 const Product = ({ product }) => {
   return (
     <div>
-      <a href={`/product/${product._id}`}>{product.name}</a>
+      <Link to={`/products/${product._id}`}>{product.name}</Link>
       <img src={product.image} height="100" />
     </div>
   )
