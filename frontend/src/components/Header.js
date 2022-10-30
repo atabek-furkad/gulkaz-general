@@ -2,9 +2,10 @@ import React from 'react'
 
 const Header = () => {
   return (
-    <div>
-      <h1>Header</h1>
-    </div>
+    <header>
+      <img src="/images/logo.png" width="100" />
+      <p>Enter</p>
+    </header>
   )
 }
 

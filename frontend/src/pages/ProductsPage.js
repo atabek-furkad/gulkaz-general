@@ -2,15 +2,15 @@ import React from 'react'
 import Product from '../components/Product'
 import products from '../products'
 
-const Products = () => {
+const ProductsPage = () => {
   return (
-    <>
+    <div className="ProductsPage">
       <h2>Products</h2>
       {products.map((product) => (
         <Product key={product.id} product={product} />
       ))}
-    </>
+    </div>
   )
 }
 
-export default Products
+export default ProductsPage
