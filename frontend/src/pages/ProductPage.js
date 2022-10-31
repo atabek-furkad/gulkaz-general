@@ -1,10 +1,20 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
-import products from '../products'
+import axios from 'axios'
 
 const ProductPage = () => {
   const params = useParams()
-  const product = products.find((p) => p._id == params.id)
+  const [product, setProduct] = useState({})
+
+  useEffect(() => {
+    const fetchProduct = async () => {
+      const { data } = await axios.get(`/api/products/${params.id}`)
+      console.log(data)
+      // const data = await response.json()
+      setProduct(data)
+    }
+    fetchProduct()
+  }, [])
 
   return (
     <div className="ProductPage">
