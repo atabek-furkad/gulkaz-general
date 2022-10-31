@@ -9,12 +9,11 @@ const ProductPage = () => {
   useEffect(() => {
     const fetchProduct = async () => {
       const { data } = await axios.get(`/api/products/${params.id}`)
-      console.log(data)
-      // const data = await response.json()
+      // console.log(data)
       setProduct(data)
     }
     fetchProduct()
-  }, [])
+  }, [params])
 
   return (
     <div className="ProductPage">
