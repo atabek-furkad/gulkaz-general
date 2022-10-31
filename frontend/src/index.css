@@ -33,7 +33,9 @@ body {
 
 header,
 footer {
-  background-color: aqua;
+  background-color: burlywood;
+  /* border: 1px solid blue; */
+  padding: 0.5rem;
 }
 
 header {
@@ -44,13 +46,28 @@ header {
 }
 
 footer {
-  border: 1px solid blue;
-  padding: 0.5rem;
+  display: grid;
+  place-content: center;
 }
 
 .HomePage,
 .ProductsPage,
-.ProductPage {
+.ProductPage,
+.AuthorizePage {
   flex-grow: 1;
   overflow-y: auto;
+  padding: 1rem;
+}
+
+.link {
+  text-decoration: none;
+  color: initial;
+}
+
+.blue {
+  color: blue;
+}
+
+.red {
+  color: red;
 }

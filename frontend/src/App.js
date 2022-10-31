@@ -4,6 +4,7 @@ import Footer from './components/Footer'
 import ProductsPage from './pages/ProductsPage'
 import ProductPage from './pages/ProductPage'
 import HomePage from './pages/HomePage'
+import AuthorizePage from './pages/AuthorizePage'
 
 const App = () => {
   return (
@@ -14,6 +15,7 @@ const App = () => {
           <Route element={<HomePage />} path="/" />
           <Route element={<ProductsPage />} path="/products" />
           <Route element={<ProductPage />} path="/products/:id" />
+          <Route element={<AuthorizePage />} path="/authorize" />
         </Routes>
         <Footer />
       </Router>

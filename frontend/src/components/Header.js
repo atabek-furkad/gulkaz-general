@@ -1,10 +1,15 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 const Header = () => {
   return (
     <header>
-      <img src="/images/logo.png" width="100" />
-      <p>Enter</p>
+      <Link to="/">
+        <img src="/images/logo.png" width="50" />
+      </Link>
+      <Link className="link" to={`/authorize`}>
+        Authorize
+      </Link>
     </header>
   )
 }
