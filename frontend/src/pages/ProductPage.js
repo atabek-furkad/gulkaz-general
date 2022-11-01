@@ -21,9 +21,9 @@ const ProductPage = () => {
       <p>Product: {product._id}</p>
       <img src={product.image} width="200" />
       <p>
-        In Stock:{' '}
-        <span className={product.inStock ? 'blue' : 'red'}>
-          {product.inStock ? 'Yes' : 'No'}
+        Store:{' '}
+        <span className={product.countInStock > 0 ? 'blue' : 'red'}>
+          {product.countInStock > 0 ? product.countInStock : 'Available soon!'}
         </span>
       </p>
     </div>
