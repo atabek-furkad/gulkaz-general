@@ -7,9 +7,10 @@ const ProductPage = () => {
   const [product, setProduct] = useState({})
 
   useEffect(() => {
+    console.log('params.id', params.id)
     const fetchProduct = async () => {
       const { data } = await axios.get(`/api/products/${params.id}`)
-      // console.log(data)
+      console.log(data)
       setProduct(data)
     }
     fetchProduct()
