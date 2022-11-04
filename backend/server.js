@@ -2,6 +2,7 @@ const express = require('express')
 const dotenv = require('dotenv')
 const connectDB = require('./config/db')
 const productRoutes = require('./routes/productRoutes')
+const { errorHandler, notFound } = require('./middleware/errorMiddleware')
 
 // const products = require('./data/products')
 
@@ -15,14 +16,8 @@ const PORT = process.env.PORT || 5000
 
 app.use('/api/products', productRoutes)
 
-// app.get('/api/products', (req, res) => {
-//   res.json(products)
-// })
-
-// app.get('/api/products/:id', (req, res) => {
-//   const product = products.find((p) => p._id === req.params.id)
-//   res.json(product)
-// })
+app.use(notFound)
+app.use(errorHandler)
 
 app.listen(PORT, () => {
   console.log(
