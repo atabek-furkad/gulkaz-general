@@ -8,7 +8,7 @@ const Header = () => {
         <img src="/images/logo.png" width="50" />
       </Link>
       <Link className="link" to={`/authorize`}>
-        Authorize
+        Login
       </Link>
     </header>
   )
