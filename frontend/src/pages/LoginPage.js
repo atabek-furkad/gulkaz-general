@@ -1,12 +1,8 @@
-<<<<<<< HEAD
-import React, { useState } from 'react'
-import checkUserCredentials from '../utils/fetchUserData'
-=======
+import checkUserCredentials from "../utils/fetchUserData";
 import React, { useState } from "react";
 import fetchUserData from "../utils/fetchUserData";
 import { UseUserContext } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
->>>>>>> f79b3f34dbe70349c0a3faa4b8069337c4e88354
 
 const LoginPage = () => {
   // const [user, setUser] = useState({})
@@ -18,12 +14,6 @@ const LoginPage = () => {
 
   const isFormFilled = Boolean(email) && Boolean(password);
 
-<<<<<<< HEAD
-  const submitForm = (e) => {
-    e.preventDefault()
-    checkUserCredentials(email, password)
-  }
-=======
   const submitForm = async (e) => {
     e.preventDefault();
     dispatch({ type: "LOGIN_START" });
@@ -38,7 +28,6 @@ const LoginPage = () => {
       dispatch({ type: "LOGIN_ERROR", payload: error });
     }
   };
->>>>>>> f79b3f34dbe70349c0a3faa4b8069337c4e88354
 
   return (
     <div className="LoginPage">
