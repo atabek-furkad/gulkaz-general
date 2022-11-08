@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import fetchUserData from '../utils/fetchUserData'
+import checkUserCredentials from '../utils/fetchUserData'
 
 const LoginPage = () => {
   // const [user, setUser] = useState({})
@@ -11,7 +11,7 @@ const LoginPage = () => {
 
   const submitForm = (e) => {
     e.preventDefault()
-    fetchUserData(email, password)
+    checkUserCredentials(email, password)
   }
 
   return (

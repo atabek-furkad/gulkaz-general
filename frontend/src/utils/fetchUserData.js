@@ -1,18 +1,21 @@
-import axios from 'axios'
-const fetchUserData = async (email, password) => {
-  const { data } = await axios.post(
-    '/api/users/login',
-    { email, password },
-    {
-      headers: {
-        'Content-Type': 'application/json',
-      },
+const checkUserCredentials = async (email, password) => {
+  const config = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
     },
-  )
-
-  console.log('data', data)
-
-  localStorage.setItem('userInfo', JSON.stringify(data))
+    body: JSON.stringify({ email, password }),
+  }
+  try {
+    const response = await fetch('/api/users/login', config)
+    if (!response.ok) {
+      throw new Error(response.statusText)
+    }
+    const data = await response.json()
+    localStorage.setItem('userInfo', JSON.stringify(data))
+  } catch (error) {
+    console.log(error.message)
+  }
 }
 
-export default fetchUserData
+export default checkUserCredentials
