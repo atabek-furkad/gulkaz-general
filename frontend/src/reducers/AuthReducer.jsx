@@ -1,15 +1,25 @@
 const AuthReducer = (state, action) => {
-  if (action.type === "LOGIN_START") {
-    return { ...state, user: null, error: null };
+  switch (action.type) {
+    case 'LOGIN':
+      // localStorage.setItem('userInfo', JSON.stringify(action.payload))
+      localStorage.setItem('user', JSON.stringify(action.payload.name))
+      localStorage.setItem('token', JSON.stringify(action.payload.token))
+      return {
+        ...state,
+        isAuthenticated: true,
+        user: action.payload.user,
+        token: action.payload.token,
+      }
+    case 'LOGOUT':
+      localStorage.clear()
+      return {
+        ...state,
+        isAuthenticated: false,
+        user: null,
+      }
+    default:
+      return state
   }
+}
 
-  if (action.type === "LOGIN_SUCCESS") {
-    return { ...state, user: action.payload };
-  }
-
-  if (action.type === "LOGIN_FAILURE") {
-    return { ...state, user: null };
-  }
-};
-
-export default AuthReducer;
+export default AuthReducer
