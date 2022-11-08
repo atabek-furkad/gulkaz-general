@@ -1,6 +1,6 @@
 const AuthReducer = (state, action) => {
   if (action.type === "LOGIN_START") {
-    return { ...state, user: null };
+    return { ...state, user: null, error: null };
   }
 
   if (action.type === "LOGIN_SUCCESS") {

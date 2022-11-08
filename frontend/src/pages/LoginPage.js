@@ -3,11 +3,13 @@ import React, { useState } from "react";
 import fetchUserData from "../utils/fetchUserData";
 import { UseUserContext } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
+import getError from "../utils/errorUtils";
+import { toast } from "react-toastify";
 
 const LoginPage = () => {
   // const [user, setUser] = useState({})
   const navigate = useNavigate();
-  const { dispatch } = UseUserContext();
+  const { dispatch, error } = UseUserContext();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -18,14 +20,15 @@ const LoginPage = () => {
     e.preventDefault();
     dispatch({ type: "LOGIN_START" });
     try {
-      const user = await fetchUserData(email, password);
+      const user = await checkUserCredentials(email, password);
       dispatch({
         type: "LOGIN_SUCCESS",
         payload: user,
       });
       navigate("/");
+      toast.success("successfully logged In");
     } catch (error) {
-      dispatch({ type: "LOGIN_ERROR", payload: error });
+      toast.error(getError(error));
     }
   };
 
@@ -57,6 +60,7 @@ const LoginPage = () => {
         <button disabled={!isFormFilled} type="submit">
           Login
         </button>
+        {error && <span>{error.message}</span>}
       </form>
     </div>
   );

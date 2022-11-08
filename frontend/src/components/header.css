@@ -1,0 +1,50 @@
+.container {
+  padding: 0.2rem;
+  margin: 0 0.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  position: relative;
+}
+
+.container button {
+  padding: 0.5rem;
+  border: none;
+  background-color: transparent;
+}
+
+.icon {
+  cursor: pointer;
+  font-size: 2rem;
+}
+
+.dropdown-container {
+}
+
+.dropdown-container .show {
+  display: none;
+}
+
+.dropdown-container .hide {
+  display: block;
+}
+
+.dropdown-container ul {
+  list-style: none;
+  position: absolute;
+  left: 0;
+
+  /* align-items: center; */
+}
+
+.dropdown-container ul li {
+  background-color: aliceblue;
+  padding: 0.5rem;
+  justify-content: center;
+  width: 5.5rem;
+}
+
+.dropdown-container ul li:hover {
+  background-color: whitesmoke;
+}
