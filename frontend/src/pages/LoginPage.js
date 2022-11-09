@@ -25,7 +25,7 @@ const LoginPage = () => {
         type: "LOGIN_SUCCESS",
         payload: user,
       });
-      navigate("/");
+      // navigate("/");
       toast.success("successfully logged In");
     } catch (error) {
       toast.error(getError(error));

@@ -19,13 +19,6 @@
   font-size: 2rem;
 }
 
-.dropdown-container {
-}
-
-.dropdown-container .show {
-  display: none;
-}
-
 .dropdown-container .hide {
   display: block;
 }
@@ -47,4 +40,8 @@
 
 .dropdown-container ul li:hover {
   background-color: whitesmoke;
+}
+
+.menu {
+  position: absolute;
 }

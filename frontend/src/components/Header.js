@@ -6,6 +6,12 @@ import "./header.css";
 
 const Header = () => {
   const { user } = UseUserContext();
+  const [open, setOpen] = useState(false);
+
+  const handleOpen = () => {
+    setOpen(!open);
+  };
+
   return (
     <header>
       <Link to="/">
@@ -13,17 +19,19 @@ const Header = () => {
       </Link>
       {user ? (
         <div className="container">
-          <button>{user.name}</button>
-          <div className="dropdown-container">
-            <AiFillCaretDown className="icon" />
-            <div className="show">
-              <ul>
-                <li>Profile</li>
-                <li>products</li>
-                <li>Logout</li>
-              </ul>
+          <button onClick={handleOpen}>{user.name}</button>
+          <AiFillCaretDown className="icon" />
+          {open ? (
+            <div className="dropdown-container menu">
+              <div className="show">
+                <ul>
+                  <li>Profile</li>
+                  <li>products</li>
+                  <li>Logout</li>
+                </ul>
+              </div>
             </div>
-          </div>
+          ) : null}
         </div>
       ) : (
         <Link className="link" to={`/login`}>
