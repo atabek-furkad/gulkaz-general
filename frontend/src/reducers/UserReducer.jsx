@@ -1,4 +1,4 @@
-const AuthReducer = (state, action) => {
+const UserReducer = (state, action) => {
   switch (action.type) {
     case 'LOGIN':
       localStorage.setItem('userInfo', JSON.stringify(action.payload))
@@ -15,11 +15,11 @@ const AuthReducer = (state, action) => {
       return {
         ...state,
         isAuthenticated: false,
-        user: null,
+        userInfo: null,
       }
     default:
       return state
   }
 }
 
-export default AuthReducer
+export default UserReducer

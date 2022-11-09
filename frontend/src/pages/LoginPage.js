@@ -1,8 +1,8 @@
-import React, { useState, useContext } from 'react'
-import { AuthContext } from '../App'
+import React, { useContext, useState } from 'react'
+import UserContext from '../context/UserContext'
 
 const LoginPage = () => {
-  const { dispatch } = useContext(AuthContext)
+  const { dispatch } = useContext(UserContext)
 
   const [data, setData] = useState({
     email: '',

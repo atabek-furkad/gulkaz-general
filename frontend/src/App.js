@@ -1,4 +1,3 @@
-import React from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Header from './components/Header'
 import Footer from './components/Footer'
@@ -7,23 +6,12 @@ import ProductPage from './pages/ProductPage'
 import HomePage from './pages/HomePage'
 import LoginPage from './pages/LoginPage'
 import ProfilePage from './pages/ProfilePage'
-
-import initialState from './initialStates/authInitialState'
-import AuthReducer from './reducers/AuthReducer'
-
-export const AuthContext = React.createContext()
+import { UserDataProvider } from './context/UserContext'
 
 const App = () => {
-  const [state, dispatch] = React.useReducer(AuthReducer, initialState)
-
   return (
-    <AuthContext.Provider
-      value={{
-        state,
-        dispatch,
-      }}
-    >
-      <div className="App">
+    <div className="App">
+      <UserDataProvider>
         <Router>
           <Header />
           <Routes>
@@ -33,11 +21,10 @@ const App = () => {
             <Route element={<LoginPage />} path="/login" />
             <Route element={<ProfilePage />} path="/profile" />
           </Routes>
-          {/* <ToastContainer position="bottom-right" limit={1} /> */}
           <Footer />
         </Router>
-      </div>
-    </AuthContext.Provider>
+      </UserDataProvider>
+    </div>
   )
 }
 
