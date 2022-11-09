@@ -19,3 +19,13 @@
 // export const UseUserContext = () => {
 //   return useContext(UserContext)
 // }
+
+import { createContext, useState, useEffect } from 'react'
+
+const UserContext = createContext({})
+
+export const UserDataProvider = ({ children }) => {
+  return <UserContext.Provider value={{}}>{children}</UserContext.Provider>
+}
+
+export default UserContext

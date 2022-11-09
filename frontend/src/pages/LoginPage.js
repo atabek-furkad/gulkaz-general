@@ -51,27 +51,10 @@ const LoginPage = () => {
         isSubmitting: false,
         errorMessage: error.message || error.statusText,
       })
+      console.log(error)
     }
     console.log('data', data)
   }
-
-  // const isFormFilled = Boolean(email) && Boolean(password)
-
-  // const submitForm = async (e) => {
-  //   e.preventDefault()
-  //   dispatch({ type: 'LOGIN_START' })
-  //   try {
-  //     const user = await checkUserCredentials(email, password)
-  //     dispatch({
-  //       type: 'LOGIN_SUCCESS',
-  //       payload: user,
-  //     })
-  //     navigate('/')
-  //     toast.success('successfully logged In')
-  //   } catch (error) {
-  //     toast.error(getError(error))
-  //   }
-  // }
 
   return (
     <div className="LoginPage">
@@ -83,7 +66,7 @@ const LoginPage = () => {
             autoFocus
             id="email"
             name="email"
-            type="text"
+            type="email"
             value={data.email}
             onChange={handleInputChange}
           />
@@ -98,15 +81,11 @@ const LoginPage = () => {
             id="password"
           />
         </div>
-        {data.errorMessage && (
-          <span className="form-error">{data.errorMessage}</span>
-        )}
-
+        {/* make with setTimeout the error is shown for a couple of seconds */}
+        {/* {data.errorMessage && <div>{data.errorMessage}</div>} */}
         <button disabled={data.isSubmitting}>
-          Submit
-          {/* {data.isSubmitting ? 'Loading...' : 'Login'} */}
+          {data.isSubmitting ? 'Loading...' : 'Login'}
         </button>
-        {/* {error && <span>{error.message}</span>} */}
       </form>
     </div>
   )
