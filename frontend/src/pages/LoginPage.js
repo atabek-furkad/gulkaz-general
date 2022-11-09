@@ -19,6 +19,10 @@ const LoginPage = () => {
   const handleFormSubmit = async (event) => {
     event.preventDefault()
 
+    dispatch({
+      type: 'LOGIN_START',
+    })
+
     const config = {
       method: 'POST',
       headers: {
@@ -36,17 +40,21 @@ const LoginPage = () => {
       const resJson = await response.json()
       dispatch({
         type: 'LOGIN_SUCCESS',
-        payload: resJson,
+        userInfo: resJson,
       })
-      if (!response.ok) {
-        dispatch({
-          type: 'LOGIN_FAIL',
-          payload: resJson.message,
-        })
-      }
+      // if (!response.ok) {
+      //   dispatch({
+      //     type: 'LOGIN_FAIL',
+      //     payload: resJson.message,
+      //   })
+      // }
 
       localStorage.setItem('userInfo', JSON.stringify(resJson))
     } catch (error) {
+      dispatch({
+        type: 'LOGIN_FAIL',
+        error: error.message,
+      })
     } finally {
     }
   }
@@ -54,7 +62,7 @@ const LoginPage = () => {
   return (
     <div className="LoginPage">
       <h1>Login Page</h1>
-      {state?.userInfo?.name}
+      {state?.loading ? 'Loading...' : null}
       <form onSubmit={handleFormSubmit}>
         <div className="input-container">
           <label htmlFor="email">Email</label>
@@ -79,6 +87,7 @@ const LoginPage = () => {
         </div>
         {/* make with setTimeout the error is shown for a couple of seconds */}
         {/* {data.errorMessage && <div>{data.errorMessage}</div>} */}
+        {state?.error ? state.error : null}
         <button>Login</button>
       </form>
     </div>
