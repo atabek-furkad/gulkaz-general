@@ -45,13 +45,18 @@ const LoginPage = () => {
         type: 'LOGIN',
         payload: resJson,
       })
+      localStorage.setItem('userInfo', JSON.stringify(resJson))
     } catch (error) {
       setData({
         ...data,
-        isSubmitting: false,
         errorMessage: error.message || error.statusText,
       })
       console.log(error)
+    } finally {
+      setData({
+        ...data,
+        isSubmitting: false,
+      })
     }
     console.log('data', data)
   }

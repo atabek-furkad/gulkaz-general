@@ -5,14 +5,24 @@ import '../styles/header.css'
 
 const Header = () => {
   const { state } = useContext(UserContext) || localStorage.getItem('userInfo')
-  console.log('header user', state.userInfo)
+
+  const { dispatch } = useContext(UserContext)
+
+  const handleLogout = () => {
+    localStorage.clear()
+    dispatch({
+      type: 'LOGOUT',
+    })
+  }
+
+  // useEffect(() => {}, [state])
   return (
     <header>
       <Link to="/">
         <img src="/images/logo.png" width="50" alt="" />
       </Link>
       {state?.userInfo ? (
-        <Link className="link" to={`/`}>
+        <Link onClick={handleLogout} className="link" to={`/`}>
           Logout
         </Link>
       ) : (
