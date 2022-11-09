@@ -34,29 +34,31 @@ const LoginPage = () => {
       }),
     }
 
-    try {
-      const response = await fetch('/api/users/login', config)
-
-      const resJson = await response.json()
-      dispatch({
-        type: 'LOGIN_SUCCESS',
-        userInfo: resJson,
+    await fetch('/api/users/login', config)
+      .then((response) => {
+        if (response.status >= 400 && response.status < 600) {
+          console.log(response.statusText)
+          throw new Error(response.statusText)
+        }
+        return response.json()
       })
-      // if (!response.ok) {
-      //   dispatch({
-      //     type: 'LOGIN_FAIL',
-      //     payload: resJson.message,
-      //   })
-      // }
-
-      localStorage.setItem('userInfo', JSON.stringify(resJson))
-    } catch (error) {
-      dispatch({
-        type: 'LOGIN_FAIL',
-        error: error.message,
+      .then((response) => {
+        localStorage.setItem('userInfo', JSON.stringify(response))
+        console.log('response 2', response)
+        dispatch({
+          type: 'LOGIN_SUCCESS',
+          payload: response,
+        })
       })
-    } finally {
-    }
+      .catch((error) => {
+        dispatch({
+          type: 'LOGIN_FAIL',
+          payload: error.message,
+        })
+      })
+      .finally(() => {
+        console.log('finally')
+      })
   }
 
   return (
