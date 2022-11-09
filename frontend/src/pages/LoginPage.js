@@ -34,31 +34,51 @@ const LoginPage = () => {
       }),
     }
 
-    await fetch('/api/users/login', config)
-      .then((response) => {
-        if (response.status >= 400 && response.status < 600) {
-          console.log(response.statusText)
-          throw new Error(response.statusText)
-        }
-        return response.json()
+    try {
+      const response = await fetch('/api/users/login', config)
+      if (response.status >= 400 && response.status < 600) {
+        console.log(response)
+        throw new Error(response.statusText)
+      }
+      const jsonData = await response.json()
+      localStorage.setItem('userInfo', JSON.stringify(jsonData))
+      dispatch({
+        type: 'LOGIN_SUCCESS',
+        payload: jsonData,
       })
-      .then((response) => {
-        localStorage.setItem('userInfo', JSON.stringify(response))
-        console.log('response 2', response)
-        dispatch({
-          type: 'LOGIN_SUCCESS',
-          payload: response,
-        })
+    } catch (error) {
+      console.log('error here', error)
+      dispatch({
+        type: 'LOGIN_FAIL',
+        payload: error.message,
       })
-      .catch((error) => {
-        dispatch({
-          type: 'LOGIN_FAIL',
-          payload: error.message,
-        })
-      })
-      .finally(() => {
-        console.log('finally')
-      })
+    }
+
+    // await fetch('/api/users//login', config)
+    //   .then((response) => {
+    //     if (response.status >= 400 && response.status < 600) {
+    //       console.log(response)
+    //       throw new Error(response.statusText)
+    //     }
+    //     return response.json()
+    //   })
+    //   .then((response) => {
+    //     localStorage.setItem('userInfo', JSON.stringify(response))
+    //     console.log('response 2', response)
+    //     dispatch({
+    //       type: 'LOGIN_SUCCESS',
+    //       payload: response,
+    //     })
+    //   })
+    //   .catch((error) => {
+    //     dispatch({
+    //       type: 'LOGIN_FAIL',
+    //       payload: error.message,
+    //     })
+    //   })
+    //   .finally(() => {
+    //     console.log('finally')
+    //   })
   }
 
   return (
