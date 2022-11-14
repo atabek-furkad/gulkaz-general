@@ -1,38 +1,31 @@
-import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { UseUserContext } from "../context/AuthContext";
-import { AiFillCaretDown } from "react-icons/ai";
-import "./header.css";
+import React, { useContext } from "react";
+import UserContext from "../context/UserContext";
+import "../styles/header.css";
 
 const Header = () => {
-  const { user } = UseUserContext();
-  const [open, setOpen] = useState(false);
+  const { state } = useContext(UserContext) || localStorage.getItem("userInfo");
 
-  const handleOpen = () => {
-    setOpen(!open);
+  const { dispatch } = useContext(UserContext);
+
+  const handleLogout = () => {
+    localStorage.clear();
+    dispatch({
+      type: "LOGOUT",
+    });
   };
 
+  // useEffect(() => {}, [state])
   return (
     <header>
       <Link to="/">
         <img src="/images/logo.png" width="50" alt="" />
       </Link>
-      {user ? (
-        <div className="container">
-          <button onClick={handleOpen}>{user.name}</button>
-          <AiFillCaretDown className="icon" />
-          {open ? (
-            <div className="dropdown-container menu">
-              <div className="show">
-                <ul>
-                  <li>Profile</li>
-                  <li>products</li>
-                  <li>Logout</li>
-                </ul>
-              </div>
-            </div>
-          ) : null}
-        </div>
+
+      {state?.userInfo ? (
+        <Link onClick={handleLogout} className="link" to={`/`}>
+          Logout
+        </Link>
       ) : (
         <Link className="link" to={`/login`}>
           Login
