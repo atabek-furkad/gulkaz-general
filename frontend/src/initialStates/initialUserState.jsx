@@ -1,6 +1,6 @@
 const initialUserState = {
   isAuthenticated: false,
   userInfo: null,
-}
+};
 
-export default initialUserState
+export default initialUserState;
