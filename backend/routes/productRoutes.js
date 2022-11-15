@@ -6,6 +6,7 @@ const {
   getProduct,
   addProduct,
   updateProduct,
+  deleteProduct,
 } = require('../controllers/productController')
 
 // description  fetch all products
@@ -27,5 +28,10 @@ router.post('/', protect, addProduct)
 // route        PUT ~/products
 // access       private
 router.put('/:id', protect, updateProduct)
+
+// description  delete single product
+// route        DELETE ~/products/:id
+// access       private
+router.delete('/:id', protect, deleteProduct)
 
 module.exports = router
