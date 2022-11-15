@@ -1,7 +1,9 @@
 import React, { useContext, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import UserContext from "../context/UserContext";
 
 const LoginPage = () => {
+  const navigate = useNavigate();
   const { state, dispatch } = useContext(UserContext);
 
   const [data, setData] = useState({
@@ -46,6 +48,7 @@ const LoginPage = () => {
         type: "LOGIN_SUCCESS",
         payload: jsonData,
       });
+      navigate("/");
     } catch (error) {
       console.log("error here", error);
       dispatch({

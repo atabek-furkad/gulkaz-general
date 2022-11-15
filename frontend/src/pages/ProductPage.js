@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import Error from "../components/Error";
 
 const ProductPage = () => {
   const params = useParams();
@@ -34,7 +35,7 @@ const ProductPage = () => {
           </p>
         </>
       ) : (
-        <h1>no product found</h1>
+        <Error />
       )}
     </div>
   );
