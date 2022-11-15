@@ -54,7 +54,8 @@ footer {
 .ProductsPage,
 .ProductPage,
 .LoginPage,
-.ProfilePage {
+.ProfilePage,
+.ErrorPage {
   flex-grow: 1;
   overflow-y: auto;
   padding: 1rem;
