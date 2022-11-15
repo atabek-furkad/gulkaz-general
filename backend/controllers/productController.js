@@ -18,17 +18,38 @@ const getProduct = asyncHandler(async (req, res) => {
 
 const addProduct = asyncHandler(async (req, res) => {
   const product = new Product({
-    name: req.body.name,
-    description: req.body.description,
+    user: req.user._id,
+    name: 'sample name',
+    description: 'sample desc',
     image: '/images/imageReplacer.jpg',
-    countInStock: req.body.countInStock,
-    category: req.body.category,
-    price: req.body.price,
+    countInStock: 1,
+    category: 'sample category',
+    price: 100,
   })
 
   const savedProduct = await product.save()
 
-  res.status(201).send(product)
+  res.status(201).json(savedProduct)
 })
 
-module.exports = { getProducts, getProduct, addProduct }
+const updateProduct = asyncHandler(async (req, res) => {
+  const { name, description, image, countInStock, category, price } = req.body
+
+  const product = await Product.findById(req.params.id)
+
+  if (product) {
+    product.name = name
+    product.description = description
+    product.image = image
+    product.countInStock = countInStock
+    product.category = category
+    product.price = price
+    const updatedProduct = await product.save()
+    res.json(updatedProduct)
+  } else {
+    res.status(404)
+    throw new Error('Product not found')
+  }
+})
+
+module.exports = { getProducts, getProduct, addProduct, updateProduct }
