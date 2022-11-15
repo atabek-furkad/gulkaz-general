@@ -1,14 +1,14 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import "../styles/error.css";
+import React from 'react'
+import '../styles/error.css'
+import BackButton from '../components/BackButton'
 
 const ErrorPage = () => {
   return (
     <div className="error">
-      <h1>Error Pages No Found</h1>
-      <Link to="/">Back Home</Link>
+      <h1>Page Not Found</h1>
+      <BackButton />
     </div>
-  );
-};
+  )
+}
 
-export default ErrorPage;
+export default ErrorPage
