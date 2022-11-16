@@ -3,9 +3,7 @@ import React, { useContext } from 'react'
 import UserContext from '../context/UserContext'
 
 const Navbar = () => {
-  const { state } = useContext(UserContext) || localStorage.getItem('userInfo')
-
-  const { dispatch } = useContext(UserContext)
+  const { state, dispatch } = useContext(UserContext)
 
   const handleLogout = () => {
     localStorage.clear()
