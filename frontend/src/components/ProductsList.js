@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import Product from '../components/Product'
+import Product from './Product'
 import axios from 'axios'
 
-const ProductsPage = () => {
+const ProductsList = () => {
   const [products, setProducts] = useState([])
 
   useEffect(() => {
@@ -16,7 +16,7 @@ const ProductsPage = () => {
   }, [])
 
   return (
-    <div className="ProductsPage">
+    <div className="ProductsList">
       <h2>Products</h2>
       {products.map((product) => (
         <Product key={product._id} product={product} />
@@ -25,4 +25,4 @@ const ProductsPage = () => {
   )
 }
 
-export default ProductsPage
+export default ProductsList

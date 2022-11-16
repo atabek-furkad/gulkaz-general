@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import Header from './components/Header'
+import Navbar from './components/Navbar'
 import Footer from './components/Footer'
-import ProductsPage from './pages/ProductsPage'
+// import ProductsList from './components/ProductsList'
 import ProductPage from './pages/ProductPage'
 import HomePage from './pages/HomePage'
 import LoginPage from './pages/LoginPage'
@@ -14,10 +14,10 @@ const App = () => {
     <div className="App">
       <UserDataProvider>
         <Router>
-          <Header />
+          <Navbar />
           <Routes>
             <Route element={<HomePage />} path="/" />
-            <Route element={<ProductsPage />} path="/products" />
+            {/* <Route element={<ProductsPage />} path="/products" /> */}
             <Route element={<ProductPage />} path="/products/:id" />
             <Route element={<LoginPage />} path="/login" />
             <Route element={<ProfilePage />} path="/profile" />
