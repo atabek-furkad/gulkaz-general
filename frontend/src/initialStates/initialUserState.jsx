@@ -1,6 +1,6 @@
 const initialUserState = {
   isAuthenticated: false,
-  userInfo: null || localStorage.getItem('userInfo'),
+  userInfo: null || JSON.parse(localStorage.getItem('userInfo')),
 }
 
 export default initialUserState

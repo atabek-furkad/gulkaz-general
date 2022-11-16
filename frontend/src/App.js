@@ -5,11 +5,10 @@ import Footer from './components/Footer'
 import ProductPage from './pages/ProductPage'
 import HomePage from './pages/HomePage'
 import LoginPage from './pages/LoginPage'
-import ProfilePage from './pages/ProfilePage'
 import ErrorPage from './pages/ErrorPage'
 
 import Protected from './components/Protected'
-import AdminPage from './pages/AdminPage'
+import ProfilePage from './pages/ProfilePage'
 
 import { UserDataProvider } from './context/UserContext'
 
@@ -26,13 +25,12 @@ const App = () => {
               path="/profile"
               element={
                 <Protected>
-                  <AdminPage />
+                  <ProfilePage />
                 </Protected>
               }
             />
             <Route element={<ProductPage />} path="/products/:id" />
             <Route element={<LoginPage />} path="/login" />
-            <Route element={<ProfilePage />} path="/profile" />
             <Route element={<ErrorPage />} path="/*" />
           </Routes>
           <Footer />

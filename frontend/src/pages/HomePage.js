@@ -4,6 +4,7 @@ import ProductsList from '../components/ProductsList'
 
 const HomePage = () => {
   const { state } = useContext(UserContext)
+
   console.log('in home page', state)
   return (
     <div className="HomePage">
