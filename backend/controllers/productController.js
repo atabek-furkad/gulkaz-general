@@ -17,19 +17,31 @@ const getProduct = asyncHandler(async (req, res) => {
 })
 
 const addProduct = asyncHandler(async (req, res) => {
-  const product = new Product({
-    user: req.user._id,
-    name: 'sample name',
-    description: 'sample desc',
-    image: '/images/imageReplacer.jpg',
-    countInStock: 1,
-    category: 'sample category',
-    price: 100,
-  })
-
-  const savedProduct = await product.save()
-
-  res.status(201).json(savedProduct)
+  console.log(req.body)
+  if (
+    req.body.name &&
+    req.body.description &&
+    req.body.countInStock &&
+    req.body.category &&
+    req.body.price
+  ) {
+    const product = new Product({
+      user: req.user._id,
+      name: req.body.name,
+      description: req.body.description,
+      image: '/images/imageReplacer.jpg',
+      countInStock: req.body.countInStock,
+      category: req.body.category,
+      price: req.body.price,
+    })
+    console.log('good')
+    const savedProduct = await product.save()
+    res.status(201).json(savedProduct)
+  } else {
+    console.log('bad')
+    res.status(400)
+    throw new Error('Form is not completed')
+  }
 })
 
 const updateProduct = asyncHandler(async (req, res) => {

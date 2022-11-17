@@ -11,6 +11,7 @@ import Protected from './components/Protected'
 import ProfilePage from './pages/ProfilePage'
 
 import { UserDataProvider } from './context/UserContext'
+import NewProductPage from './pages/NewProductPage'
 
 const App = () => {
   return (
@@ -26,6 +27,14 @@ const App = () => {
               element={
                 <Protected>
                   <ProfilePage />
+                </Protected>
+              }
+            />
+            <Route
+              path="/profile/new-product"
+              element={
+                <Protected>
+                  <NewProductPage />
                 </Protected>
               }
             />
