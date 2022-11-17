@@ -1,16 +1,22 @@
 import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import Product from '../components/Product'
 
 const ProfilePage = () => {
-  const [products, setProducts] = useState({})
+  const [products, setProducts] = useState([])
 
   useEffect(() => {
-    // const config = {
-    //   method: 'POST',
-    //   headers: {
-    //     Authorisation: `Bearer ${userInfo.token}`,
-    //   },
-    // }
+    const fetchProducts = async () => {
+      try {
+        const response = await fetch('/api/products')
+        const dataJson = await response.json()
+        setProducts(dataJson)
+        console.log('dataJson ProfilePage', dataJson)
+      } catch (error) {
+        console.log('error', error)
+      }
+    }
+    fetchProducts()
   }, [])
 
   console.log('give us Admin Page')
@@ -19,6 +25,12 @@ const ProfilePage = () => {
     <div className="ProfilePage">
       <h1>Protected Admin Profile Page</h1>
       <Link to="/profile/new-product">Create New Product</Link>
+      {products &&
+        products?.map((product) => (
+          <Product key={product._id} product={product} />
+        ))}
+
+      <div></div>
     </div>
   )
 }
