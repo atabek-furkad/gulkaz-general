@@ -4,9 +4,9 @@ import UserContext from "../context/UserContext";
 import "../styles/header.css";
 
 const Header = () => {
-  const { state } = useContext(UserContext) || localStorage.getItem("userInfo");
-
-  const { dispatch } = useContext(UserContext);
+  const { state, dispatch } = useContext(UserContext);
+  console.log("header", state);
+  // const { dispatch } = useContext(UserContext);
 
   const handleLogout = () => {
     localStorage.clear();
@@ -20,6 +20,10 @@ const Header = () => {
     <header>
       <Link to="/">
         <img src="/images/logo.png" width="50" alt="" />
+      </Link>
+
+      <Link to="/products" style={{ textDecoration: "none" }}>
+        Products
       </Link>
 
       {state?.userInfo ? (

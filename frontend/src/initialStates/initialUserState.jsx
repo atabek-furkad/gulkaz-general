@@ -1,6 +1,6 @@
 const initialUserState = {
   isAuthenticated: false,
-  userInfo: null,
+  userInfo: null || localStorage.getItem("userInfo"),
 };
 
 export default initialUserState;
