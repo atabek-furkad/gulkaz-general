@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 
-import ProductPage from './pages/ProductPage'
+// import ProductPage from './pages/ProductPage'
 import HomePage from './pages/HomePage'
 import LoginPage from './pages/LoginPage'
 import ErrorPage from './pages/ErrorPage'
@@ -38,7 +38,7 @@ const App = () => {
                 </Protected>
               }
             />
-            <Route element={<ProductPage />} path="/products/:id" />
+            {/* <Route element={<ProductPage />} path="/products/:id" /> */}
             <Route element={<LoginPage />} path="/login" />
             <Route element={<ErrorPage />} path="/*" />
           </Routes>

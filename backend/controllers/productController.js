@@ -45,14 +45,14 @@ const addProduct = asyncHandler(async (req, res) => {
 })
 
 const updateProduct = asyncHandler(async (req, res) => {
-  const { name, description, image, countInStock, category, price } = req.body
+  const { name, description, countInStock, category, price } = req.body
 
   const product = await Product.findById(req.params.id)
 
   if (product) {
     product.name = name
     product.description = description
-    product.image = image
+    product.image = '/images/imageReplacer.jpg'
     product.countInStock = countInStock
     product.category = category
     product.price = price

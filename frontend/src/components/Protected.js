@@ -4,7 +4,6 @@ import { useContext } from 'react'
 
 const Protected = ({ children }) => {
   const { state } = useContext(UserContext)
-  console.log('children', children)
   if (!state.userInfo?.isAdmin) {
     return <Navigate to="/" replace />
   }

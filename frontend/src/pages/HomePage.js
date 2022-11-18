@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import UserContext from '../context/UserContext'
-import ProductsList from '../components/ProductsList'
+// import ProductsList from '../components/ProductsList'
 
 const HomePage = () => {
   const { state } = useContext(UserContext)
@@ -9,7 +9,7 @@ const HomePage = () => {
   return (
     <div className="HomePage">
       <h1>Home Page</h1>
-      <ProductsList />
+      {/* <ProductsList /> */}
     </div>
   )
 }
