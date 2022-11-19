@@ -3,7 +3,6 @@ const UserReducer = (state, action) => {
     case 'LOGIN_START':
       return {
         ...state,
-        isAuthenticated: false,
         userInfo: null,
         error: null,
         loading: true,
@@ -19,7 +18,6 @@ const UserReducer = (state, action) => {
     case 'LOGIN_FAIL':
       return {
         ...state,
-        isAuthenticated: false,
         userInfo: null,
         error: action.payload,
         loading: false,
@@ -27,7 +25,6 @@ const UserReducer = (state, action) => {
     case 'LOGOUT':
       return {
         ...state,
-        isAuthenticated: false,
         userInfo: null,
         error: null,
         loading: false,

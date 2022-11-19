@@ -13,7 +13,7 @@ import ProfilePage from "./pages/ProfilePage";
 import { UserDataProvider } from "./context/UserContext";
 import NewProductPage from "./pages/NewProductPage";
 
-import EditProduct from "./pages/EditProduct";
+import EditProductPage from "./pages/EditProduct";
 
 const App = () => {
   return (
@@ -40,8 +40,15 @@ const App = () => {
                 </Protected>
               }
             />
-            <Route element={<ProductPage />} path="/products/:id" />
-            <Route path="/edit/product/:id" element={<EditProduct />} />
+            <Route
+              path="/profile/edit-product/:id"
+              element={
+                <Protected>
+                  <EditProductPage />
+                </Protected>
+              }
+            />
+            {/* <Route element={<ProductPage />} path="/products/:id" /> */}
             <Route element={<LoginPage />} path="/login" />
             <Route element={<ErrorPage />} path="/*" />
           </Routes>
