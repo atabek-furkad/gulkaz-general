@@ -13,7 +13,7 @@ import ProfilePage from "./pages/ProfilePage";
 import { UserDataProvider } from "./context/UserContext";
 import NewProductPage from "./pages/NewProductPage";
 
-import EditProductPage from "./pages/EditProduct";
+import EditProductPage from "./pages/EditProductPage";
 
 const App = () => {
   return (
