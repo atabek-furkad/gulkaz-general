@@ -12,6 +12,7 @@ import ProfilePage from './pages/ProfilePage'
 
 import { UserDataProvider } from './context/UserContext'
 import NewProductPage from './pages/NewProductPage'
+import EditProductPage from './pages/EditProductPage'
 
 const App = () => {
   return (
@@ -35,6 +36,14 @@ const App = () => {
               element={
                 <Protected>
                   <NewProductPage />
+                </Protected>
+              }
+            />
+            <Route
+              path="/profile/edit-product/:id"
+              element={
+                <Protected>
+                  <EditProductPage />
                 </Protected>
               }
             />

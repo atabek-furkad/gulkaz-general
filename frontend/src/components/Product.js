@@ -25,6 +25,7 @@ const Product = ({ product }) => {
       >
         <Link to={`/products/${product._id}`}>{product.name}</Link>
         <img src={product.image} height="100" />
+        <Link to={`/profile/edit-product/${product._id}`}>Edit</Link>
         <button>Delete</button>
       </form>
     </div>
