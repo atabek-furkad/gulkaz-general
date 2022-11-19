@@ -1,8 +1,10 @@
 const express = require('express')
+const path = require('path')
 const dotenv = require('dotenv')
 const connectDB = require('./config/db')
 const productRoutes = require('./routes/productRoutes')
 const userRoutes = require('./routes/userRoutes')
+const uploadRoutes = require('./routes/uploadRoutes')
 const { errorHandler, notFound } = require('./middleware/errorMiddleware')
 
 // const products = require('./data/products')
@@ -20,6 +22,9 @@ const PORT = process.env.PORT || 5000
 
 app.use('/api/products', productRoutes)
 app.use('/api/users', userRoutes)
+app.use('/api/upload', uploadRoutes)
+
+app.use('uploads', express.static(path.join(__dirname, '/uploads')))
 
 app.use(notFound)
 app.use(errorHandler)

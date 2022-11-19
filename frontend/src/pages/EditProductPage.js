@@ -70,7 +70,7 @@ const EditProductPage = () => {
       <BackButton />
       <h1>Edit Product Page</h1>
       <form onSubmit={handleFormSubmit}>
-        {/* {error && <h2>{error}</h2>} */}
+        {error && <h2>{error}</h2>}
         <div className="input-container">
           <label htmlFor="name">name</label>
           <input
