@@ -85,6 +85,14 @@ const NewProductPage = () => {
             <option value={product.carousel}>false</option>
           </select>
         </div>
+        <div className="input-container">
+          <label htmlFor="categories">categories</label>
+          <select name="categories" onChange={handleInputChange}>
+            <option value={product.categories}>null</option>
+            <option value={product.categories}>false</option>
+            <option value={product.categories}>true</option>
+          </select>
+        </div>
         <button type="Submit">Create</button>
       </form>
     </div>

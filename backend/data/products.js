@@ -6,6 +6,7 @@ const products = [
     countInStock: 3,
     category: "Garden stuff",
     carousel: null,
+    categories: null,
   },
   {
     name: "name2",
@@ -14,6 +15,7 @@ const products = [
     countInStock: 0,
     category: "Kitchen stuff",
     carousel: null,
+    categories: null,
   },
   {
     name: "name3",
@@ -22,6 +24,7 @@ const products = [
     countInStock: 2,
     category: "Garden stuff",
     carousel: null,
+    categories: null,
   },
   {
     name: "name4",
@@ -30,6 +33,7 @@ const products = [
     countInStock: 10,
     category: "Garden stuff",
     carousel: null,
+    categories: null,
   },
   {
     name: "name5",
@@ -38,6 +42,7 @@ const products = [
     countInStock: 2,
     category: "Kitchen stuff",
     carousel: null,
+    categories: null,
   },
 ];
 

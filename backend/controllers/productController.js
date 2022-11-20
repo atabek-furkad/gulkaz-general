@@ -24,7 +24,8 @@ const addProduct = asyncHandler(async (req, res) => {
     req.body.countInStock &&
     req.body.category &&
     req.body.price &&
-    req.body.carousel
+    req.body.carousel &&
+    req.body.categories
   ) {
     const product = new Product({
       user: req.user._id,
@@ -35,6 +36,7 @@ const addProduct = asyncHandler(async (req, res) => {
       category: req.body.category,
       price: req.body.price,
       carousel: req.body.carousel,
+      categories: req.body.categories,
     });
     console.log("good");
     const savedProduct = await product.save();
@@ -47,7 +49,15 @@ const addProduct = asyncHandler(async (req, res) => {
 });
 
 const updateProduct = asyncHandler(async (req, res) => {
-  const { name, description, countInStock, category, price } = req.body;
+  const {
+    name,
+    description,
+    countInStock,
+    category,
+    price,
+    carousel,
+    categories,
+  } = req.body;
   console.log("run req body backend", req.body);
 
   const product = await Product.findById(req.params.id);
@@ -59,6 +69,8 @@ const updateProduct = asyncHandler(async (req, res) => {
     product.countInStock = countInStock;
     product.category = category;
     product.price = price;
+    product.carousel = carousel;
+    product.categories = categories;
     const updatedProduct = await product.save();
     res.json(updatedProduct);
   } else {

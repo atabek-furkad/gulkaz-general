@@ -30,6 +30,7 @@ const EditProductPage = () => {
           category: product.category,
           price: product.price,
           carousel: product.carousel,
+          categories: product.categories,
         });
       } catch (error) {
         console.log("error", error);
@@ -106,6 +107,14 @@ const EditProductPage = () => {
             <option value={product.carousel}>null</option>
             <option value={product.carousel}>true</option>
             <option value={product.carousel}>false</option>
+          </select>
+        </div>
+        <div className="input-container">
+          <label htmlFor="carousel">categories</label>
+          <select name="categories" onChange={handleInputChange}>
+            <option value={product.categories}>null</option>
+            <option value={product.categories}>true</option>
+            <option value={product.categories}>false</option>
           </select>
         </div>
         <button type="Submit">Edit</button>

@@ -12,7 +12,8 @@ const useFetch = (url, method) => {
     countInStock: "",
     category: "",
     price: "",
-    carousel: false || true,
+    carousel: null,
+    categories: null,
   });
 
   const [error, setError] = useState(false);
@@ -31,6 +32,7 @@ const useFetch = (url, method) => {
       category: product.category,
       price: product.price,
       carousel: product.carousel,
+      categories: product.categories,
     }),
   };
 

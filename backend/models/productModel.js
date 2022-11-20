@@ -36,7 +36,12 @@ const productSchema = mongoose.Schema(
     carousel: {
       type: Boolean,
       required: false,
-      default: true | false,
+      default: null,
+    },
+    categories: {
+      type: Boolean,
+      required: false,
+      default: null,
     },
   },
   {
