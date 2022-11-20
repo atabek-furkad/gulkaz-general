@@ -1,41 +1,42 @@
-import React, { useEffect } from 'react'
-import { useParams } from 'react-router-dom'
-import useFetch from '../customHooks/useFetch'
-import BackButton from '../components/BackButton'
+import React, { useEffect } from "react";
+import { useParams } from "react-router-dom";
+import useFetch from "../customHooks/useFetch";
+import BackButton from "../components/BackButton";
 
 const EditProductPage = () => {
-  const params = useParams()
+  const params = useParams();
 
   const { product, setProduct, loading, error, fetchData } = useFetch(
     `/api/products/${params.id}`,
-    'PUT',
-  )
+    "PUT"
+  );
 
   const handleInputChange = (event) => {
     setProduct({
       ...product,
       [event.target.name]: event.target.value,
-    })
-  }
+    });
+  };
 
   useEffect(() => {
     const fetchData = async (id) => {
       try {
-        const response = await fetch(`/api/products/${id}`)
-        const product = await response.json()
+        const response = await fetch(`/api/products/${id}`);
+        const product = await response.json();
         setProduct({
           name: product.name,
           description: product.description,
           countInStock: product.countInStock,
           category: product.category,
           price: product.price,
-        })
+          carousel: product.carousel,
+        });
       } catch (error) {
-        console.log('error', error)
+        console.log("error", error);
       }
-    }
-    fetchData(params.id)
-  }, [])
+    };
+    fetchData(params.id);
+  }, []);
 
   return (
     <div className="EditProductPage">
@@ -43,8 +44,8 @@ const EditProductPage = () => {
       <h1>Edit Product Page</h1>
       <form
         onSubmit={(e) => {
-          e.preventDefault()
-          fetchData()
+          e.preventDefault();
+          fetchData();
         }}
       >
         {loading && <h2>Processing...</h2>}
@@ -99,10 +100,18 @@ const EditProductPage = () => {
             onChange={handleInputChange}
           />
         </div>
+        <div className="input-container">
+          <label htmlFor="carousel">carousel</label>
+          <select name="carousel" onChange={handleInputChange}>
+            <option value={product.carousel}>null</option>
+            <option value={product.carousel}>true</option>
+            <option value={product.carousel}>false</option>
+          </select>
+        </div>
         <button type="Submit">Edit</button>
       </form>
     </div>
-  )
-}
+  );
+};
 
-export default EditProductPage
+export default EditProductPage;

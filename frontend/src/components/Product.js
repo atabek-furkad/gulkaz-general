@@ -1,26 +1,26 @@
-import React, { useContext } from 'react'
-import { Link } from 'react-router-dom'
-import UserContext from '../context/UserContext'
+import React, { useContext } from "react";
+import { Link } from "react-router-dom";
+import UserContext from "../context/UserContext";
 
 const Product = ({ product }) => {
-  const { state } = useContext(UserContext)
+  const { state } = useContext(UserContext);
 
   const handleFormSubmit = async (id) => {
     const config = {
-      method: 'DELETE',
+      method: "DELETE",
       headers: {
         Authorization: `Bearer ${state.userInfo.token}`,
       },
-    }
-    await fetch(`/api/products/${id}`, config)
-  }
+    };
+    await fetch(`/api/products/${id}`, config);
+  };
 
   return (
     <div>
       <form
         onSubmit={(event) => {
           // event.preventDefault()
-          handleFormSubmit(product._id)
+          handleFormSubmit(product._id);
         }}
       >
         <Link to={`/products/${product._id}`}>{product.name}</Link>
@@ -29,7 +29,7 @@ const Product = ({ product }) => {
         <button>Delete</button>
       </form>
     </div>
-  )
-}
+  );
+};
 
-export default Product
+export default Product;

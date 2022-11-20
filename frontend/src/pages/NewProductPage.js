@@ -1,18 +1,18 @@
-import BackButton from '../components/BackButton'
-import useFetch from '../customHooks/useFetch'
+import BackButton from "../components/BackButton";
+import useFetch from "../customHooks/useFetch";
 
 const NewProductPage = () => {
   const { product, setProduct, loading, error, fetchData } = useFetch(
-    '/api/products',
-    'POST',
-  )
+    "/api/products",
+    "POST"
+  );
 
   const handleInputChange = (event) => {
     setProduct({
       ...product,
       [event.target.name]: event.target.value,
-    })
-  }
+    });
+  };
 
   return (
     <div className="NewProductPage">
@@ -20,8 +20,8 @@ const NewProductPage = () => {
       <h1>New Product Page</h1>
       <form
         onSubmit={(e) => {
-          e.preventDefault()
-          fetchData()
+          e.preventDefault();
+          fetchData();
         }}
       >
         {loading && <h2>Processing...</h2>}
@@ -77,10 +77,18 @@ const NewProductPage = () => {
             onChange={handleInputChange}
           />
         </div>
+        <div className="input-container">
+          <label htmlFor="carousel">carousel</label>
+          <select name="carousel" onChange={handleInputChange}>
+            <option value={product.carousel}>null</option>
+            <option value={product.carousel}>true</option>
+            <option value={product.carousel}>false</option>
+          </select>
+        </div>
         <button type="Submit">Create</button>
       </form>
     </div>
-  )
-}
+  );
+};
 
-export default NewProductPage
+export default NewProductPage;
