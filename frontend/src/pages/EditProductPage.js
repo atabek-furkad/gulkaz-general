@@ -1,69 +1,14 @@
-import React, { useState, useEffect, useContext } from 'react'
-import { useParams, useNavigate } from 'react-router-dom'
-import UserContext from '../context/UserContext'
-import BackButton from '../components/BackButton'
+import React from "react";
+import { useParams } from "react-router-dom";
+import BackButton from "../components/BackButton";
+import { useFetchData } from "../hook/HandleGlobalForm";
 
 const EditProductPage = () => {
-  const params = useParams()
-  const { state } = useContext(UserContext)
-  const navigate = useNavigate()
+  const { id } = useParams();
 
-  const [name, setName] = useState('')
-  const [description, setDescription] = useState('')
-  const [countInStock, setCountInStock] = useState(0)
-  const [category, setCategory] = useState('')
-  const [price, setPrice] = useState(0)
-
-  const [error, setError] = useState('')
-
-  useEffect(() => {
-    const fetchData = async (id) => {
-      try {
-        const response = await fetch(`/api/products/${id}`)
-        const product = await response.json()
-        setName(product.name)
-        setDescription(product.description)
-        setCountInStock(product.countInStock)
-        setCategory(product.category)
-        setPrice(product.setPrice)
-        console.log('edit product page: product', product)
-      } catch (error) {
-        console.log('error', error)
-      }
-    }
-    fetchData(params.id)
-  }, [])
-
-  const handleFormSubmit = async (event) => {
-    event.preventDefault()
-    const config = {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${state.userInfo.token}`,
-      },
-      body: JSON.stringify({
-        name,
-        description,
-        countInStock,
-        category,
-        price,
-      }),
-    }
-
-    try {
-      const response = await fetch(`/api/products/${params.id}`, config)
-      if (response.status >= 400 && response.status < 600) {
-        console.log(response)
-        throw new Error(response.statusText)
-      }
-      const jsonData = await response.json()
-      console.log('jsonData new product', jsonData)
-      navigate('/profile')
-    } catch (error) {
-      setError(error.message)
-    }
-  }
+  const { handleFormSubmit, error, handleInputChange, product } = useFetchData(
+    `/api/products/${id}`
+  );
 
   return (
     <div className="EditProductPage">
@@ -77,9 +22,9 @@ const EditProductPage = () => {
             id="name"
             name="name"
             type="text"
-            value={name}
+            value={product.name}
             onChange={(event) => {
-              setName(event.target.value)
+              handleInputChange(event);
             }}
           />
         </div>
@@ -89,9 +34,9 @@ const EditProductPage = () => {
             id="description"
             name="description"
             type="text"
-            value={description}
+            value={product.description}
             onChange={(event) => {
-              setDescription(event.target.value)
+              handleInputChange(event);
             }}
           />
         </div>
@@ -101,9 +46,9 @@ const EditProductPage = () => {
             id="countInStock"
             name="countInStock"
             type="number"
-            value={countInStock}
+            value={product.countInStock}
             onChange={(event) => {
-              setCountInStock(event.target.value)
+              handleInputChange(event);
             }}
           />
         </div>
@@ -113,9 +58,9 @@ const EditProductPage = () => {
             id="category"
             name="category"
             type="text"
-            value={category}
+            value={product.category}
             onChange={(event) => {
-              setCategory(event.target.value)
+              handleInputChange(event);
             }}
           />
         </div>
@@ -125,16 +70,16 @@ const EditProductPage = () => {
             id="price"
             name="price"
             type="number"
-            value={price}
+            value={product.price}
             onChange={(event) => {
-              setPrice(event.target.value)
+              handleInputChange(event);
             }}
           />
         </div>
         <button type="Submit">Edit</button>
       </form>
     </div>
-  )
-}
+  );
+};
 
-export default EditProductPage
+export default EditProductPage;
