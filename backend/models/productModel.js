@@ -33,6 +33,11 @@ const productSchema = mongoose.Schema(
       required: false,
       default: 0,
     },
+    carousel: {
+      type: Boolean,
+      required: false,
+      default: true | false,
+    },
   },
   {
     timestamps: true,

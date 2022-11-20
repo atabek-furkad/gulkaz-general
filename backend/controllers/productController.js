@@ -23,7 +23,8 @@ const addProduct = asyncHandler(async (req, res) => {
     req.body.description &&
     req.body.countInStock &&
     req.body.category &&
-    req.body.price
+    req.body.price &&
+    req.body.carousel
   ) {
     const product = new Product({
       user: req.user._id,
@@ -33,6 +34,7 @@ const addProduct = asyncHandler(async (req, res) => {
       countInStock: req.body.countInStock,
       category: req.body.category,
       price: req.body.price,
+      carousel: req.body.carousel,
     });
     console.log("good");
     const savedProduct = await product.save();
