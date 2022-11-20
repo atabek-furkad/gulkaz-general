@@ -1,58 +1,10 @@
-import React, { useState, useEffect, useContext } from 'react'
-import { useNavigate } from 'react-router-dom'
-import UserContext from '../context/UserContext'
-import BackButton from '../components/BackButton'
+import React from "react";
+import BackButton from "../components/BackButton";
+import { useFetchData } from "../hook/HandleGlobalForm";
 
 const NewProductPage = () => {
-  const { state } = useContext(UserContext)
-  const navigate = useNavigate()
-
-  const [product, setProduct] = useState({
-    name: '',
-    description: '',
-    countInStock: '',
-    category: '',
-    price: '',
-  })
-  const [error, setError] = useState('')
-
-  const handleInputChange = (event) => {
-    setProduct({
-      ...product,
-      [event.target.name]: event.target.value,
-    })
-  }
-
-  const handleFormSubmit = async (event) => {
-    event.preventDefault()
-    const config = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${state.userInfo.token}`,
-      },
-      body: JSON.stringify({
-        name: product.name,
-        description: product.description,
-        countInStock: product.countInStock,
-        category: product.category,
-        price: product.price,
-      }),
-    }
-
-    try {
-      const response = await fetch('/api/products', config)
-      if (response.status >= 400 && response.status < 600) {
-        console.log(response)
-        throw new Error(response.statusText)
-      }
-      const jsonData = await response.json()
-      console.log('jsonData new product', jsonData)
-      navigate('/profile')
-    } catch (error) {
-      setError(error.message)
-    }
-  }
+  const { handleFormSubmit, handleInputChange, product, error } =
+    useFetchData("/api/products");
 
   return (
     <div className="NewProductPage">
@@ -113,7 +65,7 @@ const NewProductPage = () => {
         <button type="Submit">Create</button>
       </form>
     </div>
-  )
-}
+  );
+};
 
-export default NewProductPage
+export default NewProductPage;

@@ -1,18 +1,19 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import Navbar from './components/Navbar'
-import Footer from './components/Footer'
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
 
-// import ProductPage from './pages/ProductPage'
-import HomePage from './pages/HomePage'
-import LoginPage from './pages/LoginPage'
-import ErrorPage from './pages/ErrorPage'
+import ProductPage from "./pages/ProductPage";
+import HomePage from "./pages/HomePage";
+import LoginPage from "./pages/LoginPage";
+import ErrorPage from "./pages/ErrorPage";
 
-import Protected from './components/Protected'
-import ProfilePage from './pages/ProfilePage'
+import Protected from "./components/Protected";
+import ProfilePage from "./pages/ProfilePage";
 
-import { UserDataProvider } from './context/UserContext'
-import NewProductPage from './pages/NewProductPage'
-import EditProductPage from './pages/EditProductPage'
+import { UserDataProvider } from "./context/UserContext";
+import NewProductPage from "./pages/NewProductPage";
+
+import EditProductPage from "./pages/EditProductPage";
 
 const App = () => {
   return (
@@ -55,7 +56,7 @@ const App = () => {
         </Router>
       </UserDataProvider>
     </div>
-  )
-}
+  );
+};
 
-export default App
+export default App;
