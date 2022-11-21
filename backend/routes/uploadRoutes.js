@@ -1,12 +1,11 @@
 const express = require('express')
 const multer = require('multer')
 const path = require('path')
-
 const router = express.Router()
 
 const storage = multer.diskStorage({
   destination(req, file, cb) {
-    cb(null, 'uploads/')
+    cb(null, 'frontend/public/images/')
   },
   filename(req, file, cb) {
     cb(
@@ -16,25 +15,21 @@ const storage = multer.diskStorage({
   },
 })
 
-const imageMimeTypes = ['image/png', 'image/jpeg', 'image/gif', 'image/jpg']
+function checkFileType(file, cb) {
+  const filetypes = /jpg|jpeg|png/
+  const extname = filetypes.test(path.extname(file.originalname).toLowerCase())
+  const mimetype = filetypes.test(file.mimetype)
 
-const checkFileType = (file, cb) => {
-  const fileTypes = /jpg|jpeg|png/
-  const extname = fileTypes.test(
-    path.extname(file.originalname).toLocaleLowerCase(),
-  )
-  const mimeType = fileTypes.includes(imageMimeTypes)
-
-  if (extname && mimeType) {
+  if (extname && mimetype) {
     return cb(null, true)
   } else {
-    return cb('Images only')
+    cb('Images only!')
   }
 }
 
 const upload = multer({
   storage,
-  fileFilter: (req, file, cb) => {
+  fileFilter: function (req, file, cb) {
     checkFileType(file, cb)
   },
 })
