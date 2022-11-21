@@ -44,7 +44,7 @@ const NewProductPage = () => {
   // }
 
   useEffect(() => {
-    console.log('product', product)
+    // console.log('product', product)
   }, [product])
 
   const uploadFileHandler = async (e) => {
