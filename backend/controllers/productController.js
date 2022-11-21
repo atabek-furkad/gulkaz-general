@@ -17,45 +17,33 @@ const getProduct = asyncHandler(async (req, res) => {
 })
 
 const addProduct = asyncHandler(async (req, res) => {
-  console.log(req.body)
-  if (
-    req.body.name &&
-    req.body.description &&
-    req.body.countInStock &&
-    req.body.category &&
-    req.body.price
-  ) {
-    const product = new Product({
-      user: req.user._id,
-      name: req.body.name,
-      description: req.body.description,
-      image: '/images/imageReplacer.jpg',
-      countInStock: req.body.countInStock,
-      category: req.body.category,
-      price: req.body.price,
-    })
-    console.log('good')
-    const savedProduct = await product.save()
-    res.status(201).json(savedProduct)
-  } else {
-    console.log('bad')
-    res.status(400)
-    throw new Error('Form is not completed')
-  }
+  console.log(req.user)
+  const product = new Product({
+    name: req.body.name,
+    price: req.body.price,
+    user: req.user._id,
+    image: req.body.image,
+    category: req.body.category,
+    countInStock: req.body.countInStock,
+    description: req.body.description,
+  })
+
+  const createdProduct = await product.save()
+  res.status(201).json(createdProduct)
 })
 
 const updateProduct = asyncHandler(async (req, res) => {
-  const { name, description, countInStock, category, price } = req.body
+  const { name, description, countInStock, category, price, image } = req.body
 
   const product = await Product.findById(req.params.id)
 
   if (product) {
     product.name = name
     product.description = description
-    product.image = '/images/imageReplacer.jpg'
     product.countInStock = countInStock
     product.category = category
     product.price = price
+    product.image = image
     const updatedProduct = await product.save()
     res.json(updatedProduct)
   } else {
