@@ -19,15 +19,13 @@ const getProduct = asyncHandler(async (req, res) => {
 const addProduct = asyncHandler(async (req, res) => {
   console.log(req.user)
   const product = new Product({
-    name: 'Sample name',
-    price: 0,
+    name: req.body.name,
+    price: req.body.price,
     user: req.user._id,
     image: req.body.image,
-    brand: 'Sample brand',
-    category: 'Sample category',
-    countInStock: 0,
-    numReviews: 0,
-    description: 'Sample description',
+    category: req.body.category,
+    countInStock: req.body.countInStock,
+    description: req.body.description,
   })
 
   const createdProduct = await product.save()

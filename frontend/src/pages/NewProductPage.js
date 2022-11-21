@@ -1,47 +1,47 @@
 import BackButton from '../components/BackButton'
-// import useFetch from '../customHooks/useFetch'
+import useFetch from '../customHooks/useFetch'
 import { useState, useEffect, useContext } from 'react'
 import UserContext from '../context/UserContext'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 
 const NewProductPage = () => {
-  // const { product, setProduct, loading, error, fetchData } = useFetch(
-  //   '/api/products',
-  //   'POST',
-  // )
+  const { product, setProduct, loading, error, fetchData } = useFetch(
+    '/api/products',
+    'POST',
+  )
 
-  const { state } = useContext(UserContext)
-  const navigate = useNavigate()
+  // const { state } = useContext(UserContext)
+  // const navigate = useNavigate()
 
-  const [product, setProduct] = useState({
-    name: '',
-    description: '',
-    countInStock: '',
-    category: '',
-    price: '',
-    image: '',
-  })
+  // const [product, setProduct] = useState({
+  //   name: '',
+  //   description: '',
+  //   countInStock: '',
+  //   category: '',
+  //   price: '',
+  //   image: '',
+  // })
 
-  const [error, setError] = useState(false)
-  const [loading, setLoading] = useState(false)
+  // const [error, setError] = useState(false)
+  // const [loading, setLoading] = useState(false)
   const [uploading, setUploading] = useState(false)
 
-  const config = {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${state.userInfo.token}`,
-    },
-    body: JSON.stringify({
-      name: product.name,
-      description: product.description,
-      countInStock: product.countInStock,
-      category: product.category,
-      price: product.price,
-      image: product.image,
-    }),
-  }
+  // const config = {
+  //   method: 'POST',
+  //   headers: {
+  //     'Content-Type': 'application/json',
+  //     Authorization: `Bearer ${state.userInfo.token}`,
+  //   },
+  //   body: JSON.stringify({
+  //     name: product.name,
+  //     description: product.description,
+  //     countInStock: product.countInStock,
+  //     category: product.category,
+  //     price: product.price,
+  //     image: product.image,
+  //   }),
+  // }
 
   useEffect(() => {
     console.log('product', product)
@@ -76,24 +76,24 @@ const NewProductPage = () => {
     }
   }
 
-  const handleFormSubmit = async () => {
-    setLoading(true)
-    try {
-      const response = await fetch('/api/products', config)
-      if (response.status >= 400 && response.status < 600) {
-        console.log(response)
-        throw new Error(response.statusText)
-      }
-      const received = await response.json()
-      console.log('received data', received)
-      // setProduct(received)
-      navigate('/profile')
-    } catch (error) {
-      setError(error.message)
-    } finally {
-      setLoading(false)
-    }
-  }
+  // const handleFormSubmit = async () => {
+  //   setLoading(true)
+  //   try {
+  //     const response = await fetch('/api/products', config)
+  //     if (response.status >= 400 && response.status < 600) {
+  //       console.log(response)
+  //       throw new Error(response.statusText)
+  //     }
+  //     const received = await response.json()
+  //     console.log('received data', received)
+  //     // setProduct(received)
+  //     navigate('/profile')
+  //   } catch (error) {
+  //     setError(error.message)
+  //   } finally {
+  //     setLoading(false)
+  //   }
+  // }
 
   const handleInputChange = (event) => {
     setProduct({
@@ -109,7 +109,7 @@ const NewProductPage = () => {
       <form
         onSubmit={(e) => {
           e.preventDefault()
-          handleFormSubmit()
+          fetchData()
         }}
       >
         {loading && <h2>Processing...</h2>}

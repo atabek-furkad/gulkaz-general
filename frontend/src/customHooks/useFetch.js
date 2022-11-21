@@ -12,6 +12,7 @@ const useFetch = (url, method) => {
     countInStock: '',
     category: '',
     price: '',
+    image: '',
   })
 
   const [error, setError] = useState(false)
@@ -29,6 +30,7 @@ const useFetch = (url, method) => {
       countInStock: product.countInStock,
       category: product.category,
       price: product.price,
+      image: product.image,
     }),
   }
 
