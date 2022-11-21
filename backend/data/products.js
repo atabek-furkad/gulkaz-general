@@ -5,6 +5,8 @@ const products = [
     image: "/images/1.jpg",
     countInStock: 3,
     category: "Garden stuff",
+    categories: null,
+    carousel: null,
   },
   {
     name: "name2",
@@ -12,6 +14,8 @@ const products = [
     image: "/images/2.jpg",
     countInStock: 0,
     category: "Kitchen stuff",
+    categories: null,
+    carousel: null,
   },
   {
     name: "name3",
@@ -19,6 +23,8 @@ const products = [
     image: "/images/3.jpg",
     countInStock: 2,
     category: "Garden stuff",
+    categories: null,
+    carousel: null,
   },
   {
     name: "name4",
@@ -26,6 +32,8 @@ const products = [
     image: "/images/4.jpg",
     countInStock: 10,
     category: "Garden stuff",
+    categories: null,
+    carousel: null,
   },
   {
     name: "name5",
@@ -33,6 +41,8 @@ const products = [
     image: "/images/5.jpg",
     countInStock: 2,
     category: "Kitchen stuff",
+    categories: null,
+    carousel: null,
   },
 ];
 

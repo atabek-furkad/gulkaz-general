@@ -26,6 +26,8 @@ const addProduct = asyncHandler(async (req, res) => {
     category: req.body.category,
     countInStock: req.body.countInStock,
     description: req.body.description,
+    categories: req.body.categories,
+    carousel: req.body.carousel,
   });
 
   const createdProduct = await product.save();
@@ -33,7 +35,16 @@ const addProduct = asyncHandler(async (req, res) => {
 });
 
 const updateProduct = asyncHandler(async (req, res) => {
-  const { name, description, countInStock, category, price, image } = req.body;
+  const {
+    name,
+    description,
+    countInStock,
+    category,
+    price,
+    image,
+    categories,
+    carousel,
+  } = req.body;
 
   const product = await Product.findById(req.params.id);
 
@@ -44,6 +55,8 @@ const updateProduct = asyncHandler(async (req, res) => {
     product.category = category;
     product.price = price;
     product.image = image;
+    product.categories = categories;
+    product.carousel = carousel;
     const updatedProduct = await product.save();
     res.json(updatedProduct);
   } else {
