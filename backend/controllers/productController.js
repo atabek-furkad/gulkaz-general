@@ -1,5 +1,6 @@
 const asyncHandler = require("express-async-handler");
 const Product = require("../models/productModel");
+const fs = require("fs");
 
 const getProducts = asyncHandler(async (req, res) => {
   const products = await Product.find({});
@@ -68,8 +69,19 @@ const updateProduct = asyncHandler(async (req, res) => {
 const deleteProduct = asyncHandler(async (req, res) => {
   const product = await Product.findById(req.params.id);
 
+  const unlinkFile = await product.image.slice(1);
+
   if (product) {
     await product.remove();
+
+    fs.unlink(unlinkFile, (err) => {
+      if (err) {
+        throw err;
+      }
+
+      console.log("Delete File successfully.");
+    });
+
     res.json({ message: "Product removed" });
   } else {
     res.status(404);
