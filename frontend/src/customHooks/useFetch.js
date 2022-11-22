@@ -39,6 +39,7 @@ const useFetch = (url, method) => {
   const fetchData = async () => {
     setLoading(true)
     try {
+      console.log('i am putting stuff into product on put method?', product)
       const response = await fetch(url, config)
       if (response.status >= 400 && response.status < 600) {
         console.log(response)

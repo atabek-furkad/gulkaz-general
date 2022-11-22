@@ -61,15 +61,16 @@ const EditProductPage = () => {
           countInStock: product.countInStock,
           category: product.category,
           price: product.price,
-          categories: product.categories,
-          carousel: product.carousel,
+          topProduct: product.topProduct,
+          image: product.image,
         })
+        console.log('product ', product)
       } catch (error) {
         console.log('error', error)
       }
     }
+
     fetchData(params.id)
-    // eslint-disable-next-line
   }, [])
 
   return (
@@ -86,7 +87,7 @@ const EditProductPage = () => {
         {error && <h2>{error}</h2>}
         {error && <h2>Fill all the inputs</h2>}
         <div className="input-container">
-          <label htmlFor="name">name</label>
+          <label htmlFor="name">Name</label>
           <input
             id="name"
             name="name"
@@ -96,7 +97,7 @@ const EditProductPage = () => {
           />
         </div>
         <div className="input-container">
-          <label htmlFor="description">description</label>
+          <label htmlFor="description">Description</label>
           <input
             id="description"
             name="description"
@@ -106,7 +107,7 @@ const EditProductPage = () => {
           />
         </div>
         <div className="input-container">
-          <label htmlFor="countInStock">countInStock</label>
+          <label htmlFor="countInStock">CountInStock</label>
           <input
             id="countInStock"
             name="countInStock"
@@ -116,7 +117,7 @@ const EditProductPage = () => {
           />
         </div>
         <div className="input-container">
-          <label htmlFor="category">category</label>
+          <label htmlFor="category">Category</label>
           <input
             id="category"
             name="category"
@@ -126,7 +127,7 @@ const EditProductPage = () => {
           />
         </div>
         <div className="input-container">
-          <label htmlFor="price">price</label>
+          <label htmlFor="price">Price</label>
           <input
             id="price"
             name="price"
@@ -137,7 +138,7 @@ const EditProductPage = () => {
         </div>
 
         <div className="input-container">
-          <label htmlFor="topProduct">top product</label>
+          <label htmlFor="topProduct">Top product</label>
           <select
             id="topProduct"
             name="topProduct"
