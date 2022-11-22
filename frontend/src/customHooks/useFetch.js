@@ -1,29 +1,28 @@
-import { useState, useContext } from "react";
-import UserContext from "../context/UserContext";
-import { useNavigate } from "react-router-dom";
+import { useState, useContext } from 'react'
+import UserContext from '../context/UserContext'
+import { useNavigate } from 'react-router-dom'
 
 const useFetch = (url, method) => {
-  const { state } = useContext(UserContext);
-  const navigate = useNavigate();
+  const { state } = useContext(UserContext)
+  const navigate = useNavigate()
 
   const [product, setProduct] = useState({
-    name: "",
-    description: "",
-    countInStock: "",
-    category: "",
-    price: "",
-    image: "",
-    categories: null,
-    carousel: null,
-  });
+    name: '',
+    description: '',
+    countInStock: '',
+    category: '',
+    price: '',
+    image: '',
+    topProduct: '',
+  })
 
-  const [error, setError] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false)
+  const [loading, setLoading] = useState(false)
 
   const config = {
     method,
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
       Authorization: `Bearer ${state.userInfo.token}`,
     },
     body: JSON.stringify({
@@ -33,30 +32,29 @@ const useFetch = (url, method) => {
       category: product.category,
       price: product.price,
       image: product.image,
-      categories: product.categories,
-      carousel: product.carousel,
+      topProduct: product.topProduct,
     }),
-  };
+  }
 
   const fetchData = async () => {
-    setLoading(true);
+    setLoading(true)
     try {
-      const response = await fetch(url, config);
+      const response = await fetch(url, config)
       if (response.status >= 400 && response.status < 600) {
-        console.log(response);
-        throw new Error(response.statusText);
+        console.log(response)
+        throw new Error(response.statusText)
       }
-      const received = await response.json();
-      setProduct(received);
-      navigate("/profile");
+      const received = await response.json()
+      setProduct(received)
+      navigate('/profile')
     } catch (error) {
-      setError(error.message);
+      setError(error.message)
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
-  };
+  }
 
-  return { product, setProduct, error, loading, fetchData };
-};
+  return { product, setProduct, error, loading, fetchData }
+}
 
-export default useFetch;
+export default useFetch

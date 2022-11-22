@@ -1,11 +1,11 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose')
 
 const productSchema = mongoose.Schema(
   {
     user: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
-      ref: "User",
+      ref: 'User',
     },
     name: {
       type: String,
@@ -33,22 +33,17 @@ const productSchema = mongoose.Schema(
       required: true,
       default: 0,
     },
-    categories: {
+    topProduct: {
       type: Boolean,
       required: false,
-      default: null,
-    },
-    carousel: {
-      type: Boolean,
-      required: false,
-      default: null,
+      default: false,
     },
   },
   {
     timestamps: true,
-  }
-);
+  },
+)
 
-const Product = mongoose.model("Product", productSchema);
+const Product = mongoose.model('Product', productSchema)
 
-module.exports = Product;
+module.exports = Product

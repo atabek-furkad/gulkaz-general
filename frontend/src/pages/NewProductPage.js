@@ -1,16 +1,19 @@
-import BackButton from "../components/BackButton";
-import useFetch from "../customHooks/useFetch";
-import { useState, useEffect, useContext } from "react";
-import UserContext from "../context/UserContext";
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import BackButton from '../components/BackButton'
+import useFetch from '../customHooks/useFetch'
+import { useState, useEffect, useContext } from 'react'
+import UserContext from '../context/UserContext'
+import { useNavigate } from 'react-router-dom'
+import axios from 'axios'
 
 const NewProductPage = () => {
   const { product, setProduct, loading, error, fetchData } = useFetch(
-    "/api/products",
-    "POST"
-  );
+    '/api/products',
+    'POST',
+  )
 
+  useFetch(() => {
+    console.log('product', product)
+  }, [product])
   // const { state } = useContext(UserContext)
   // const navigate = useNavigate()
 
@@ -25,7 +28,7 @@ const NewProductPage = () => {
 
   // const [error, setError] = useState(false)
   // const [loading, setLoading] = useState(false)
-  const [uploading, setUploading] = useState(false);
+  const [uploading, setUploading] = useState(false)
 
   // const config = {
   //   method: 'POST',
@@ -45,36 +48,36 @@ const NewProductPage = () => {
 
   useEffect(() => {
     // console.log('product', product)
-  }, [product]);
+  }, [product])
 
   const uploadFileHandler = async (e) => {
-    const file = e.target.files[0];
-    const formData = new FormData();
-    formData.append("image", file);
-    setUploading(true);
-    console.log("file", file);
+    const file = e.target.files[0]
+    const formData = new FormData()
+    formData.append('image', file)
+    setUploading(true)
+    console.log('file', file)
 
     try {
       const config = {
         headers: {
-          "Content-Type": "multipart/form-data",
+          'Content-Type': 'multipart/form-data',
         },
-      };
+      }
 
-      const { data } = await axios.post("/api/upload", formData, config);
+      const { data } = await axios.post('/api/upload', formData, config)
 
-      console.log("image path data", data);
+      console.log('image path data', data)
       setProduct({
         ...product,
         image: `${await data}`,
-      });
-      console.log("product", product);
-      setUploading(false);
+      })
+      console.log('product', product)
+      setUploading(false)
     } catch (error) {
-      console.error(error);
-      setUploading(false);
+      console.error(error)
+      setUploading(false)
     }
-  };
+  }
 
   // const handleFormSubmit = async () => {
   //   setLoading(true)
@@ -99,8 +102,8 @@ const NewProductPage = () => {
     setProduct({
       ...product,
       [event.target.name]: event.target.value,
-    });
-  };
+    })
+  }
 
   return (
     <div className="NewProductPage">
@@ -108,12 +111,13 @@ const NewProductPage = () => {
       <h1>New Product Page</h1>
       <form
         onSubmit={(e) => {
-          e.preventDefault();
-          fetchData();
+          e.preventDefault()
+          fetchData()
         }}
       >
         {loading && <h2>Processing...</h2>}
         {error && <h2>{error}</h2>}
+        {error && <h2>Fill all the inputs</h2>}
 
         <div className="input-container">
           <label htmlFor="name">name</label>
@@ -166,33 +170,19 @@ const NewProductPage = () => {
           />
         </div>
         <div className="input-container">
-          <label htmlFor="carousel">categories</label>
+          <label htmlFor="topProduct">top product</label>
           <select
-            name="categories"
-            value={product.categories}
+            id="topProduct"
+            name="topProduct"
+            value={product.topProduct}
             onChange={handleInputChange}
           >
-            <option disabled selected>
-              choose
-            </option>
-            <option>true</option>
-            <option>false</option>
+            <option hidden>--Choose--</option>
+            <option value={'false'}>No</option>
+            <option value={'true'}>Yes</option>
           </select>
         </div>
-        <div className="input-container">
-          <label htmlFor="carousel">carousel</label>
-          <select
-            name="carousel"
-            value={product.carousel}
-            onChange={handleInputChange}
-          >
-            <option disabled selected>
-              choose
-            </option>
-            <option>true</option>
-            <option>false</option>
-          </select>
-        </div>
+
         <div className="input-container">
           {uploading && <h2>Uploading...</h2>}
           <label htmlFor="image-upload">Choose a picture:</label>
@@ -207,7 +197,7 @@ const NewProductPage = () => {
         <button type="Submit">Create</button>
       </form>
     </div>
-  );
-};
+  )
+}
 
-export default NewProductPage;
+export default NewProductPage

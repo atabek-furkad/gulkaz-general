@@ -9,6 +9,10 @@ const ProfilePage = () => {
     const fetchProducts = async () => {
       try {
         const response = await fetch('/api/products')
+        if (response.status >= 400 && response.status < 600) {
+          console.log(response)
+          throw new Error(response.statusText)
+        }
         const dataJson = await response.json()
         setProducts(dataJson)
         console.log('dataJson ProfilePage', dataJson)

@@ -1,60 +1,60 @@
-import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import useFetch from "../customHooks/useFetch";
-import BackButton from "../components/BackButton";
-import axios from "axios";
+import React, { useState, useEffect } from 'react'
+import { useParams } from 'react-router-dom'
+import useFetch from '../customHooks/useFetch'
+import BackButton from '../components/BackButton'
+import axios from 'axios'
 
 const EditProductPage = () => {
-  const params = useParams();
+  const params = useParams()
 
   const { product, setProduct, loading, error, fetchData } = useFetch(
     `/api/products/${params.id}`,
-    "PUT"
-  );
+    'PUT',
+  )
 
-  const [uploading, setUploading] = useState(false);
+  const [uploading, setUploading] = useState(false)
 
   const uploadFileHandler = async (e) => {
-    const file = e.target.files[0];
-    const formData = new FormData();
-    formData.append("image", file);
-    setUploading(true);
-    console.log("file", file);
+    const file = e.target.files[0]
+    const formData = new FormData()
+    formData.append('image', file)
+    setUploading(true)
+    console.log('file', file)
 
     try {
       const config = {
         headers: {
-          "Content-Type": "multipart/form-data",
+          'Content-Type': 'multipart/form-data',
         },
-      };
+      }
 
-      const { data } = await axios.post("/api/upload", formData, config);
+      const { data } = await axios.post('/api/upload', formData, config)
 
-      console.log("image path data", data);
+      console.log('image path data', data)
       setProduct({
         ...product,
         image: `${await data}`,
-      });
-      console.log("product", product);
-      setUploading(false);
+      })
+      console.log('product', product)
+      setUploading(false)
     } catch (error) {
-      console.error(error);
-      setUploading(false);
+      console.error(error)
+      setUploading(false)
     }
-  };
+  }
 
   const handleInputChange = (event) => {
     setProduct({
       ...product,
       [event.target.name]: event.target.value,
-    });
-  };
+    })
+  }
 
   useEffect(() => {
     const fetchData = async (id) => {
       try {
-        const response = await fetch(`/api/products/${id}`);
-        const product = await response.json();
+        const response = await fetch(`/api/products/${id}`)
+        const product = await response.json()
         setProduct({
           name: product.name,
           description: product.description,
@@ -63,14 +63,14 @@ const EditProductPage = () => {
           price: product.price,
           categories: product.categories,
           carousel: product.carousel,
-        });
+        })
       } catch (error) {
-        console.log("error", error);
+        console.log('error', error)
       }
-    };
-    fetchData(params.id);
+    }
+    fetchData(params.id)
     // eslint-disable-next-line
-  }, []);
+  }, [])
 
   return (
     <div className="EditProductPage">
@@ -78,12 +78,13 @@ const EditProductPage = () => {
       <h1>Edit Product Page</h1>
       <form
         onSubmit={(e) => {
-          e.preventDefault();
-          fetchData();
+          e.preventDefault()
+          fetchData()
         }}
       >
         {loading && <h2>Processing...</h2>}
         {error && <h2>{error}</h2>}
+        {error && <h2>Fill all the inputs</h2>}
         <div className="input-container">
           <label htmlFor="name">name</label>
           <input
@@ -134,32 +135,17 @@ const EditProductPage = () => {
             onChange={handleInputChange}
           />
         </div>
+
         <div className="input-container">
-          <label htmlFor="carousel">categories</label>
+          <label htmlFor="topProduct">top product</label>
           <select
-            name="categories"
-            value={product.categories}
+            id="topProduct"
+            name="topProduct"
+            value={product.topProduct}
             onChange={handleInputChange}
           >
-            <option disabled selected>
-              choose
-            </option>
-            <option>true</option>
-            <option>false</option>
-          </select>
-        </div>
-        <div className="input-container">
-          <label htmlFor="carousel">carousel</label>
-          <select
-            name="carousel"
-            value={product.carousel}
-            onChange={handleInputChange}
-          >
-            <option disabled selected>
-              choose
-            </option>
-            <option>true</option>
-            <option>false</option>
+            <option value={'false'}>No</option>
+            <option value={'true'}>Yes</option>
           </select>
         </div>
         <div className="input-container">
@@ -176,7 +162,7 @@ const EditProductPage = () => {
         <button type="Submit">Edit</button>
       </form>
     </div>
-  );
-};
+  )
+}
 
-export default EditProductPage;
+export default EditProductPage

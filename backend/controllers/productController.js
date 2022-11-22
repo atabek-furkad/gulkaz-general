@@ -1,24 +1,31 @@
-const asyncHandler = require("express-async-handler");
-const Product = require("../models/productModel");
-const fs = require("fs");
+const asyncHandler = require('express-async-handler')
+const Product = require('../models/productModel')
+const fs = require('fs')
 
 const getProducts = asyncHandler(async (req, res) => {
-  const products = await Product.find({});
-  res.json(products);
-});
+  const products = await Product.find({})
+  if (products.length > 0) {
+    console.log('get products', products)
+    res.json(products)
+  } else {
+    console.log('running?')
+    res.status(404)
+    throw new Error('Products not found')
+  }
+})
 
 const getProduct = asyncHandler(async (req, res) => {
-  const product = await Product.findById(req.params.id);
+  const product = await Product.findById(req.params.id)
   if (product) {
-    res.json(product);
+    res.json(product)
   } else {
-    res.status(404);
-    throw new Error("Product not found");
+    res.status(404)
+    throw new Error('Product not found')
   }
-});
+})
 
 const addProduct = asyncHandler(async (req, res) => {
-  console.log(req.user);
+  console.log(req.user)
   const product = new Product({
     name: req.body.name,
     price: req.body.price,
@@ -27,13 +34,12 @@ const addProduct = asyncHandler(async (req, res) => {
     category: req.body.category,
     countInStock: req.body.countInStock,
     description: req.body.description,
-    categories: req.body.categories,
-    carousel: req.body.carousel,
-  });
+    topProduct: req.body.topProduct,
+  })
 
-  const createdProduct = await product.save();
-  res.status(201).json(createdProduct);
-});
+  const createdProduct = await product.save()
+  res.status(201).json(createdProduct)
+})
 
 const updateProduct = asyncHandler(async (req, res) => {
   const {
@@ -43,51 +49,49 @@ const updateProduct = asyncHandler(async (req, res) => {
     category,
     price,
     image,
-    categories,
-    carousel,
-  } = req.body;
+    topProduct,
+  } = req.body
 
-  const product = await Product.findById(req.params.id);
+  const product = await Product.findById(req.params.id)
 
   if (product) {
-    product.name = name;
-    product.description = description;
-    product.countInStock = countInStock;
-    product.category = category;
-    product.price = price;
-    product.image = image;
-    product.categories = categories;
-    product.carousel = carousel;
-    const updatedProduct = await product.save();
-    res.json(updatedProduct);
+    product.name = name
+    product.description = description
+    product.countInStock = countInStock
+    product.category = category
+    product.price = price
+    product.image = image
+    product.topProduct = topProduct
+    const updatedProduct = await product.save()
+    res.json(updatedProduct)
   } else {
-    res.status(404);
-    throw new Error("Product not found");
+    res.status(404)
+    throw new Error('Product not found')
   }
-});
+})
 
 const deleteProduct = asyncHandler(async (req, res) => {
-  const product = await Product.findById(req.params.id);
+  const product = await Product.findById(req.params.id)
 
-  const unlinkFile = await product.image.slice(1);
+  const unlinkFile = await product.image.slice(1)
 
   if (product) {
-    await product.remove();
+    await product.remove()
 
     fs.unlink(unlinkFile, (err) => {
       if (err) {
-        throw err;
+        throw err
       }
 
-      console.log("Delete File successfully.");
-    });
+      console.log('Delete File successfully.')
+    })
 
-    res.json({ message: "Product removed" });
+    res.json({ message: 'Product removed' })
   } else {
-    res.status(404);
-    throw new Error("Product not found");
+    res.status(404)
+    throw new Error('Product not found')
   }
-});
+})
 
 module.exports = {
   getProducts,
@@ -95,4 +99,4 @@ module.exports = {
   addProduct,
   updateProduct,
   deleteProduct,
-};
+}
