@@ -47,7 +47,8 @@ const NewProductPage = () => {
   // }
 
   useEffect(() => {
-    // console.log('product', product)
+    console.log('product', product)
+    console.log('product.topProduct', product.topProduct)
   }, [product])
 
   const uploadFileHandler = async (e) => {
@@ -120,7 +121,7 @@ const NewProductPage = () => {
         {error && <h2>Fill all the inputs</h2>}
 
         <div className="input-container">
-          <label htmlFor="name">name</label>
+          <label htmlFor="name">Name</label>
           <input
             id="name"
             name="name"
@@ -130,7 +131,7 @@ const NewProductPage = () => {
           />
         </div>
         <div className="input-container">
-          <label htmlFor="description">description</label>
+          <label htmlFor="description">Description</label>
           <input
             id="description"
             name="description"
@@ -140,7 +141,7 @@ const NewProductPage = () => {
           />
         </div>
         <div className="input-container">
-          <label htmlFor="countInStock">countInStock</label>
+          <label htmlFor="countInStock">CountInStock</label>
           <input
             id="countInStock"
             name="countInStock"
@@ -150,7 +151,7 @@ const NewProductPage = () => {
           />
         </div>
         <div className="input-container">
-          <label htmlFor="category">category</label>
+          <label htmlFor="category">Category</label>
           <input
             id="category"
             name="category"
@@ -160,7 +161,7 @@ const NewProductPage = () => {
           />
         </div>
         <div className="input-container">
-          <label htmlFor="price">price</label>
+          <label htmlFor="price">Price</label>
           <input
             id="price"
             name="price"
@@ -170,14 +171,17 @@ const NewProductPage = () => {
           />
         </div>
         <div className="input-container">
-          <label htmlFor="topProduct">top product</label>
+          <label htmlFor="topProduct">Top product</label>
           <select
             id="topProduct"
             name="topProduct"
-            value={product.topProduct}
+            value={
+              product.topProduct
+                ? product.topProduct
+                : setProduct({ ...product, topProduct: 'false' })
+            }
             onChange={handleInputChange}
           >
-            <option hidden>--Choose--</option>
             <option value={'false'}>No</option>
             <option value={'true'}>Yes</option>
           </select>

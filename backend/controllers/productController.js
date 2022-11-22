@@ -5,10 +5,8 @@ const fs = require('fs')
 const getProducts = asyncHandler(async (req, res) => {
   const products = await Product.find({})
   if (products.length > 0) {
-    console.log('get products', products)
     res.json(products)
   } else {
-    console.log('running?')
     res.status(404)
     throw new Error('Products not found')
   }

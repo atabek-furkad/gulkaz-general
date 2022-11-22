@@ -4,9 +4,12 @@ import Product from '../components/Product'
 
 const ProfilePage = () => {
   const [products, setProducts] = useState([])
+  const [error, setError] = useState('')
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
     const fetchProducts = async () => {
+      setLoading(true)
       try {
         const response = await fetch('/api/products')
         if (response.status >= 400 && response.status < 600) {
@@ -15,19 +18,22 @@ const ProfilePage = () => {
         }
         const dataJson = await response.json()
         setProducts(dataJson)
-        console.log('dataJson ProfilePage', dataJson)
+        // console.log('dataJson ProfilePage', dataJson)
       } catch (error) {
+        setError(error.message)
         console.log('error', error)
+      } finally {
+        setLoading(false)
       }
     }
     fetchProducts()
   }, [])
 
-  console.log('give us Admin Page')
-
   return (
     <div className="ProfilePage">
       <h1>Protected Admin Profile Page</h1>
+      {loading && <h2>Loading...</h2>}
+      {error && <h2>{error}</h2>}
       <Link to="/profile/new-product">Create New Product</Link>
       {products &&
         products?.map((product) => (
