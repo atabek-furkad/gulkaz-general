@@ -16,6 +16,7 @@ const storage = multer.diskStorage({
 const imageMimeTypes = ['image/png', 'image/jpeg', 'image/gif', 'image/jpg']
 
 const checkFileType = (file, cb) => {
+  console.log('am i getting here??')
   const filetypes = /jpg|jpeg|png/
   const extname = filetypes.test(path.extname(file.originalname).toLowerCase())
   const mimetype = imageMimeTypes.includes(file.mimetype)

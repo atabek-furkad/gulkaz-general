@@ -30,6 +30,8 @@ const NewProductPage = () => {
   // const [loading, setLoading] = useState(false)
   const [uploading, setUploading] = useState(false)
 
+  const [imagePath, setImagePath] = useState([])
+
   // const config = {
   //   method: 'POST',
   //   headers: {
@@ -52,32 +54,109 @@ const NewProductPage = () => {
   }, [product])
 
   const uploadFileHandler = async (e) => {
-    const file = e.target.files[0]
-    const formData = new FormData()
-    formData.append('image', file)
-    setUploading(true)
-    console.log('file', file)
+    // const file = e.target.files[0]
 
-    try {
-      const config = {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      }
+    // object of objects turning into array of objects
+    const arrayOfFiles = Object.values(e.target.files)
+    // const myObjects = e.target.files
+    const galleryData = new FormData()
 
-      const { data } = await axios.post('/api/upload', formData, config)
-
-      console.log('image path data', data)
-      setProduct({
-        ...product,
-        image: `${await data}`,
-      })
-      console.log('product', product)
-      setUploading(false)
-    } catch (error) {
-      console.error(error)
-      setUploading(false)
+    for (let i = 0; i < arrayOfFiles.length; i++) {
+      galleryData.append('image', arrayOfFiles[i])
     }
+
+    // console.log('galleryData', galleryData)
+
+    // const formData = new FormData()
+    // formData.append('image', file)
+
+    // console.log('file', file)
+
+    const config = {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    }
+
+    // const mapped = arrayOfFiles.map((file) => {
+    //   const formData = new FormData()
+    //   formData.append('image', file)
+    //   console.log('formData', formData)
+    // })
+
+    // console.log('mapped', mapped)
+
+    // arrayOfFiles.forEach(async (file) => {
+
+    // console.log("formData", formData)
+
+    const { data } = await axios.post('/api/upload', await galleryData, config)
+
+    console.log('image path data', data)
+
+    const imagePaths = await data.map((image) => {
+      console.log('image paths', image.path)
+      return image.path
+    })
+
+    console.log('imagePaths', imagePaths)
+
+    setProduct({
+      ...product,
+      image: imagePaths,
+    })
+
+    const links = data.map((file) => {
+      return file.path.slice(15)
+    })
+
+    // const path = await data.slice(16)
+
+    // console.log('data checking path', path)
+
+    setImagePath(links)
+
+    console.log(links)
+    // })
+
+    // console.log('arrayOfFiles', arrayOfFiles)
+
+    // // create a form
+    // const formData = new FormData()
+
+    // // turn it into an image
+    // formData.append('image', file)
+
+    // setUploading(true)
+    // console.log('file', file)
+
+    // try {
+    // const config = {
+    //   headers: {
+    //     'Content-Type': 'multipart/form-data',
+    //   },
+    // }
+
+    // const { data } = await axios.post('/api/upload', formData, config)
+
+    // console.log('image path data', data)
+    // setProduct({
+    //   ...product,
+    //   image: `${await data}`,
+    // })
+
+    // console.log('data path', data)
+    // const path = await data.slice(16)
+
+    // console.log('data checking path', path)
+
+    // await setImagePath(path)
+    // console.log('product', product)
+    // setUploading(false)
+    // } catch (error) {
+    //   console.error(error)
+    //   setUploading(false)
+    // }
   }
 
   // const handleFormSubmit = async () => {
@@ -194,10 +273,15 @@ const NewProductPage = () => {
             type="file"
             id="image-upload"
             name="image-upload"
+            multiple="multiple"
             accept="image/png, image/jpeg, image/png"
             onChange={uploadFileHandler}
           />
         </div>
+        {imagePath.map((path, index) => {
+          console.log('path', path)
+          return <img width="100" key={index} src={path} />
+        })}
         <button type="Submit">Create</button>
       </form>
     </div>
