@@ -15,7 +15,9 @@ const Product = ({ product }) => {
     await fetch(`/api/products/${id}`, config);
   };
 
-  const imagePath = product.image.slice(16);
+  let showImage = product.image.map((images) => {
+    return images.slice(16);
+  });
 
   return (
     <div>
@@ -26,11 +28,9 @@ const Product = ({ product }) => {
         }}
       >
         <Link to={`/products/${product._id}`}>{product.name}</Link>
-        {/* {imagePath.map((images, index) => (
-          <img src={images} key={index} alt='' />
-        ))} */}
-        {imagePath.map((images, index) => {
-          return <img src={images} alt='' key={index} />;
+
+        {showImage?.slice(0, 1).map((images, index) => {
+          return <img src={images} alt='' key={index} height='100' />;
         })}
 
         <Link to={`/profile/edit-product/${product._id}`}>Edit</Link>
