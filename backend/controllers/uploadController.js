@@ -6,10 +6,10 @@ const storage = multer.diskStorage({
     cb(null, 'frontend/public/images/');
   },
   filename(req, file, cb) {
-    const randomImages = Math.random() * Date.now();
+    const genRandomNum = Math.random() * Date.now();
     cb(
       null,
-      `${file.fieldname}-${randomImages}${path.extname(file.originalname)}`
+      `${file.fieldname}-${genRandomNum}${path.extname(file.originalname)}`
     );
   },
 });
