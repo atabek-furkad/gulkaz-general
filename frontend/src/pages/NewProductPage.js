@@ -97,8 +97,6 @@ const NewProductPage = () => {
       return image.path;
     });
 
-    console.log('imagePaths', imagePaths);
-
     setProduct({
       ...product,
       image: imagePaths,
@@ -278,7 +276,7 @@ const NewProductPage = () => {
         </div>
         {imagePath.map((path, index) => {
           console.log('path', path);
-          return <img width='100' key={index} src={path} />;
+          return <img width='100' key={index} src={path} alt='' />;
         })}
         <button type='Submit'>Create</button>
       </form>
