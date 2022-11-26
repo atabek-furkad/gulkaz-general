@@ -18,7 +18,6 @@ const ProfilePage = () => {
         }
         const dataJson = await response.json()
         setProducts(dataJson)
-        // console.log('dataJson ProfilePage', dataJson)
       } catch (error) {
         setError(error.message)
         console.log('error', error)

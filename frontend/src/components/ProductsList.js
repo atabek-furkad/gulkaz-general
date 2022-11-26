@@ -9,7 +9,6 @@ const ProductsList = () => {
     const fetchProducts = async () => {
       const { data } = await axios.get('/api/products')
       console.log(data)
-      // const data = await response.json()
       setProducts(data)
     }
     fetchProducts()
