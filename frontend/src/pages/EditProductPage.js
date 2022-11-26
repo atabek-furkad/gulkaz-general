@@ -15,32 +15,33 @@ const EditProductPage = () => {
   const [uploading, setUploading] = useState(false)
 
   const uploadFileHandler = async (e) => {
-    const file = e.target.files[0]
-    const formData = new FormData()
-    formData.append('image', file)
     setUploading(true)
-    console.log('file', file)
 
-    try {
-      const config = {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      }
+    // object of objects turning into array of objects
+    const arrayOfFiles = Object.values(e.target.files)
 
-      const { data } = await axios.post('/api/upload', formData, config)
+    const galleryData = new FormData()
 
-      console.log('image path data', data)
-      setProduct({
-        ...product,
-        image: `${await data}`,
-      })
-      console.log('product', product)
-      setUploading(false)
-    } catch (error) {
-      console.error(error)
-      setUploading(false)
+    arrayOfFiles.forEach((index) => galleryData.append('image', index))
+
+    const config = {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
     }
+
+    const { data } = await axios.post('/api/upload', galleryData, config)
+
+    const imagePaths = await data.map((image) => {
+      return image.path
+    })
+
+    setProduct({
+      ...product,
+      image: imagePaths,
+    })
+
+    setUploading(false)
   }
 
   const handleInputChange = (event) => {
@@ -73,14 +74,6 @@ const EditProductPage = () => {
     fetchData(params.id)
     // eslint-disable-next-line
   }, [])
-
-  // console.log("what's product", product)
-  // console.log("what's product images links", product.image)
-
-  // const showImages = product?.image?.map((images) =>
-  //   console.log(images.slice(16)),
-  // )
-  // console.log("what's product images", showImages)
 
   return (
     <div className="EditProductPage">
@@ -165,16 +158,15 @@ const EditProductPage = () => {
             type="file"
             id="image-upload"
             name="image-upload"
+            multiple
             accept="image/png, image/jpeg, image/png"
             onChange={uploadFileHandler}
           />
         </div>
         {product.image.map((element, index) => {
           const path = element.slice(15)
-          console.log(path)
           return <img src={path} alt="product" width="100" key={index} />
         })}
-
         <button type="Submit">Edit</button>
       </form>
     </div>
