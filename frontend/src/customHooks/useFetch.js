@@ -12,7 +12,7 @@ const useFetch = (url, method) => {
     countInStock: '',
     category: '',
     price: '',
-    image: '',
+    image: [],
     topProduct: '',
   })
 
