@@ -15,24 +15,20 @@ const Product = ({ product }) => {
     await fetch(`/api/products/${id}`, config)
   }
 
-  const showImage = product.image.map((i) => {
-    console.log('i', i)
-    return i.slice(15)
-  })
+  const showImages = product.images.map((image) => image.slice(15))
 
   return (
     <div>
       <form
-        onSubmit={(event) => {
-          // event.preventDefault()
+        onSubmit={() => {
           handleFormSubmit(product._id)
         }}
       >
         <Link to={`/products/${product._id}`}>{product.name}</Link>
 
-        {showImage?.slice(0, 1).map((images, index) => {
-          return <img src={images} alt="" key={index} height="100" />
-        })}
+        {showImages?.slice(0, 1).map((image, index) => (
+          <img src={image} alt="product" key={index} height="100" />
+        ))}
 
         <Link to={`/profile/edit-product/${product._id}`}>Edit</Link>
         <button>Delete</button>

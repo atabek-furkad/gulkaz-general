@@ -1,8 +1,6 @@
 import BackButton from '../components/BackButton'
 import useFetch from '../customHooks/useFetch'
-import { useState, useEffect, useContext } from 'react'
-import UserContext from '../context/UserContext'
-import { useNavigate } from 'react-router-dom'
+import { useState } from 'react'
 import axios from 'axios'
 
 const NewProductPage = () => {
@@ -17,7 +15,7 @@ const NewProductPage = () => {
 
   const [uploading, setUploading] = useState(false)
 
-  const [imagePath, setImagePath] = useState([])
+  const [imagePaths, setImagePaths] = useState([])
 
   const uploadFileHandler = async (e) => {
     setUploading(true)
@@ -36,16 +34,16 @@ const NewProductPage = () => {
 
     const { data } = await axios.post('/api/upload', galleryData, config)
 
-    const imagePaths = await data.map((image) => image.path)
+    const tempImagePaths = await data.map((element) => element.path)
 
     setProduct({
       ...product,
-      image: imagePaths,
+      images: tempImagePaths,
     })
 
-    const links = data.map((file) => file.path.slice(15))
+    const tempSlicedLinks = data.map((file) => file.path.slice(15))
 
-    setImagePath(links)
+    setImagePaths(tempSlicedLinks)
 
     setUploading(false)
   }
@@ -150,10 +148,9 @@ const NewProductPage = () => {
             onChange={uploadFileHandler}
           />
         </div>
-        {imagePath.map((path, index) => {
-          console.log('path', path)
-          return <img width="100" key={index} src={path} alt="" />
-        })}
+        {imagePaths.map((path, index) => (
+          <img width="100" key={index} src={path} alt="" />
+        ))}
         <button type="Submit">Create</button>
       </form>
     </div>

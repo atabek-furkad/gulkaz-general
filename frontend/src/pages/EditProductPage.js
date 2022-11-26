@@ -32,13 +32,11 @@ const EditProductPage = () => {
 
     const { data } = await axios.post('/api/upload', galleryData, config)
 
-    const imagePaths = await data.map((image) => {
-      return image.path
-    })
+    const tempImagePaths = await data.map((image) => image.path)
 
     setProduct({
       ...product,
-      image: imagePaths,
+      images: tempImagePaths,
     })
 
     setUploading(false)
@@ -63,9 +61,8 @@ const EditProductPage = () => {
           category: product.category,
           price: product.price,
           topProduct: product.topProduct,
-          image: product.image,
+          images: product.images,
         })
-        console.log('product ', product)
       } catch (error) {
         console.log('error', error)
       }
@@ -163,7 +160,7 @@ const EditProductPage = () => {
             onChange={uploadFileHandler}
           />
         </div>
-        {product.image.map((element, index) => {
+        {product.images.map((element, index) => {
           const path = element.slice(15)
           return <img src={path} alt="product" width="100" key={index} />
         })}

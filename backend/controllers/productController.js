@@ -28,7 +28,7 @@ const addProduct = asyncHandler(async (req, res) => {
     name: req.body.name,
     price: req.body.price,
     user: req.user._id,
-    image: req.body.image,
+    images: req.body.images,
     category: req.body.category,
     countInStock: req.body.countInStock,
     description: req.body.description,
@@ -46,7 +46,7 @@ const updateProduct = asyncHandler(async (req, res) => {
     countInStock,
     category,
     price,
-    image,
+    images,
     topProduct,
   } = req.body
 
@@ -58,7 +58,7 @@ const updateProduct = asyncHandler(async (req, res) => {
     product.countInStock = countInStock
     product.category = category
     product.price = price
-    product.image = image
+    product.images = images
     product.topProduct = topProduct
     const updatedProduct = await product.save()
     res.json(updatedProduct)
@@ -71,18 +71,19 @@ const updateProduct = asyncHandler(async (req, res) => {
 const deleteProduct = asyncHandler(async (req, res) => {
   const product = await Product.findById(req.params.id)
 
-  const unlinkFile = await product.image.slice(1)
+  // needs to be rewritten to delete all the images from storage of the particular product
+  // const unlinkFile = await product.images.slice(1)
 
   if (product) {
     await product.remove()
 
-    fs.unlink(unlinkFile, (err) => {
-      if (err) {
-        throw err
-      }
+    // fs.unlink(unlinkFile, (err) => {
+    //   if (err) {
+    //     throw err
+    //   }
 
-      console.log('Delete File successfully.')
-    })
+    //   console.log('Delete File successfully.')
+    // })
 
     res.json({ message: 'Product removed' })
   } else {

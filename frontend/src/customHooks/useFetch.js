@@ -12,7 +12,7 @@ const useFetch = (url, method) => {
     countInStock: '',
     category: '',
     price: '',
-    image: [],
+    images: [],
     topProduct: '',
   })
 
@@ -31,7 +31,7 @@ const useFetch = (url, method) => {
       countInStock: product.countInStock,
       category: product.category,
       price: product.price,
-      image: product.image,
+      images: product.images,
       topProduct: product.topProduct,
     }),
   }
@@ -39,7 +39,6 @@ const useFetch = (url, method) => {
   const fetchData = async () => {
     setLoading(true)
     try {
-      console.log('i am putting stuff into product on put method?', product)
       const response = await fetch(url, config)
       if (response.status >= 400 && response.status < 600) {
         console.log(response)
