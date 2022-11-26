@@ -15,9 +15,7 @@ const Product = ({ product }) => {
     await fetch(`/api/products/${id}`, config);
   };
 
-  let showImage = product.image.map((images) => {
-    return images.slice(16);
-  });
+  const showImage = product.image.map((images) => images.slice(16));
 
   return (
     <div>
