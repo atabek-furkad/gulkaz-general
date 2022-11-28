@@ -1,30 +1,38 @@
-import React, { useState, useEffect } from 'react'
-import { useParams } from 'react-router-dom'
-import axios from 'axios'
-import BackButton from '../components/BackButton'
+import React, { useEffect, useContext } from 'react';
+import { useParams } from 'react-router-dom';
+import BackButton from '../components/BackButton';
+import { ProductsContext } from '../context/ProductContext';
 
 const ProductPage = () => {
-  const params = useParams()
-  const [product, setProduct] = useState({})
+  const params = useParams();
+  const {
+    fetchProducts: fetchSingleProduct,
+    products: product,
+    loading,
+    error,
+  } = useContext(ProductsContext);
 
   useEffect(() => {
-    console.log('params.id', params.id)
-    const fetchProduct = async () => {
-      const { data } = await axios.get(`/api/products/${params.id}`)
-      console.log(data)
-      setProduct(data)
-    }
-    fetchProduct()
-  }, [params])
+    console.log('params.id', params.id);
+    fetchSingleProduct(`/api/products/${params.id}`);
+  }, [params, fetchSingleProduct]);
+
+  if (loading) {
+    return <h2>Is Loading...</h2>;
+  }
+
+  if (error) {
+    return <h2>Oop is Error...</h2>;
+  }
 
   return (
-    <div className="ProductPage">
+    <div className='ProductPage'>
       {product._id ? (
         <>
           <h2>Product Page</h2>
 
           <p>Product: {product._id}</p>
-          <img src={product.image} width="200" />
+          <img src={product.image} width='200' alt='' />
           <p>
             Store:{' '}
             <span className={product.countInStock > 0 ? 'blue' : 'red'}>
@@ -41,7 +49,7 @@ const ProductPage = () => {
         </>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default ProductPage
+export default ProductPage;
