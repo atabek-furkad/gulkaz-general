@@ -11,10 +11,9 @@ router.post('/', upload.array('image', 12), (req, res) => {
 router.post(
   '/unlink',
   asyncHandler(async (req, res) => {
+    console.log('req.body', req.body)
     try {
-      req.body.forEach(
-        (path) => fs.existsSync(path.path) && fs.unlinkSync(path.path),
-      )
+      req.body.forEach((path) => fs.existsSync(path) && fs.unlinkSync(path))
       res.json({ message: 'success' })
     } catch (err) {
       console.error(err)

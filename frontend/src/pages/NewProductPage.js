@@ -11,21 +11,13 @@ const NewProductPage = () => {
     'POST',
   )
 
-  useFetch(() => {
-    console.log('product', product)
-  }, [product])
-
   const [uploading, setUploading] = useState(false)
-
-  const [imagePaths, setImagePaths] = useState([])
 
   const [pathList, setPathList] = useState([])
 
   const unlinkFiles = async () => {
     if (pathList.length > 0) {
-      console.log('pathList', pathList)
-      const { data } = await axios.post('/api/upload/unlink', pathList)
-      console.log('data', data)
+      await axios.post('/api/upload/unlink', pathList)
     }
   }
 
@@ -49,19 +41,14 @@ const NewProductPage = () => {
 
     const { data } = await axios.post('/api/upload', galleryData, config)
 
-    setPathList(data)
-
-    console.log('pathList', pathList)
     const tempImagePaths = await data.map((element) => element.path)
+
+    setPathList(tempImagePaths)
 
     setProduct({
       ...product,
       images: tempImagePaths,
     })
-
-    const tempSlicedLinks = data.map((file) => file.path.slice(15))
-
-    setImagePaths(tempSlicedLinks)
 
     setUploading(false)
   }
@@ -166,9 +153,15 @@ const NewProductPage = () => {
             onChange={uploadFileHandler}
           />
         </div>
-        {imagePaths.map((path, index) => (
-          <img width="100" key={index} src={path} alt="" />
-        ))}
+        {pathList
+          ? pathList.map((image, index) => {
+              const path = image.slice(15)
+              return <img width="100" key={index} src={path} alt="" />
+            })
+          : product.images.map((element, index) => {
+              const path = element.slice(15)
+              return <img src={path} alt="product" width="100" key={index} />
+            })}
         <button type="Submit">Create</button>
         <button
           onClick={(e) => {

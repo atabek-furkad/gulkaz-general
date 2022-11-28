@@ -14,8 +14,18 @@ const EditProductPage = () => {
 
   const [uploading, setUploading] = useState(false)
 
+  const [pathList, setPathList] = useState([])
+
+  const unlinkFiles = async () => {
+    if (pathList.length > 0) {
+      await axios.post('/api/upload/unlink', pathList)
+    }
+  }
+
   const uploadFileHandler = async (e) => {
     setUploading(true)
+
+    await unlinkFiles()
 
     // object of objects turning into array of objects
     const arrayOfFiles = Object.values(e.target.files)
@@ -33,6 +43,8 @@ const EditProductPage = () => {
     const { data } = await axios.post('/api/upload', galleryData, config)
 
     const tempImagePaths = await data.map((image) => image.path)
+
+    setPathList(tempImagePaths)
 
     setProduct({
       ...product,
@@ -63,14 +75,15 @@ const EditProductPage = () => {
           topProduct: product.topProduct,
           images: product.images,
         })
+
+        setPathList(product.images)
       } catch (error) {
         console.log('error', error)
       }
     }
 
     fetchData(params.id)
-    // eslint-disable-next-line
-  }, [])
+  }, [params.id, setProduct])
 
   return (
     <div className="EditProductPage">
@@ -160,10 +173,15 @@ const EditProductPage = () => {
             onChange={uploadFileHandler}
           />
         </div>
-        {product.images.map((element, index) => {
-          const path = element.slice(15)
-          return <img src={path} alt="product" width="100" key={index} />
-        })}
+        {pathList
+          ? pathList.map((image, index) => {
+              const path = image.slice(15)
+              return <img width="100" key={index} src={path} alt="" />
+            })
+          : product.images.map((element, index) => {
+              const path = element.slice(15)
+              return <img src={path} alt="product" width="100" key={index} />
+            })}
         <button type="Submit">Edit</button>
       </form>
     </div>
