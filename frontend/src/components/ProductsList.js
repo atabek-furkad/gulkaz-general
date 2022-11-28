@@ -1,27 +1,32 @@
-import React, { useState, useEffect } from 'react'
-import Product from './Product'
-import axios from 'axios'
+import React, { useEffect, useContext } from 'react';
+import Product from './Product';
+import { ProductsContext } from '../context/ProductContext';
 
 const ProductsList = () => {
-  const [products, setProducts] = useState([])
-
+  const { fetchProducts, products, loading, error } =
+    useContext(ProductsContext);
+  console.log("what's products", products);
   useEffect(() => {
-    const fetchProducts = async () => {
-      const { data } = await axios.get('/api/products')
-      console.log(data)
-      setProducts(data)
-    }
-    fetchProducts()
-  }, [])
+    fetchProducts('/api/products');
+    // eslint-disable-next-line
+  }, []);
+
+  if (loading) {
+    return <h1>IS Loading...</h1>;
+  }
+
+  if (error) {
+    return <h1>Oop Is Error...</h1>;
+  }
 
   return (
-    <div className="ProductsList">
+    <div className='ProductsList'>
       <h2>Products</h2>
       {products.map((product) => (
         <Product key={product._id} product={product} />
       ))}
     </div>
-  )
-}
+  );
+};
 
-export default ProductsList
+export default ProductsList;
