@@ -6,7 +6,7 @@ const ProductsList = () => {
 <<<<<<< HEAD
   const { fetchProducts, products, loading, error } =
     useContext(ProductsContext);
-
+  console.log("what's products", products);
   useEffect(() => {
     fetchProducts('/api/products');
     // eslint-disable-next-line
