@@ -1,64 +1,59 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
 
-import { ProductsProvider } from './context/ProductContext';
+import ProductPage from "./pages/ProductPage";
+import HomePage from "./pages/HomePage";
+import LoginPage from "./pages/LoginPage";
+import ErrorPage from "./pages/ErrorPage";
 
-import Navbar from './components/Navbar';
-import Footer from './components/Footer';
+import Protected from "./components/Protected";
+import ProfilePage from "./pages/ProfilePage";
 
-import ProductPage from './pages/ProductPage';
-import HomePage from './pages/HomePage';
-import LoginPage from './pages/LoginPage';
-import ErrorPage from './pages/ErrorPage';
+import { UserDataProvider } from "./context/UserContext";
+import NewProductPage from "./pages/NewProductPage";
 
-import Protected from './components/Protected';
-import ProfilePage from './pages/ProfilePage';
-
-import { UserDataProvider } from './context/UserContext';
-import NewProductPage from './pages/NewProductPage';
-
-import EditProductPage from './pages/EditProductPage';
+import EditProductPage from "./pages/EditProductPage";
 
 const App = () => {
   return (
-    <div className='App'>
+    <div className="App">
       <UserDataProvider>
-        <ProductsProvider>
-          <Router>
-            <Navbar />
-            <Routes>
-              <Route element={<HomePage />} path='/' />
+        <Router>
+          <Navbar />
+          <Routes>
+            <Route element={<HomePage />} path="/" />
 
-              <Route
-                path='/profile'
-                element={
-                  <Protected>
-                    <ProfilePage />
-                  </Protected>
-                }
-              />
-              <Route
-                path='/profile/new-product'
-                element={
-                  <Protected>
-                    <NewProductPage />
-                  </Protected>
-                }
-              />
-              <Route
-                path='/profile/edit-product/:id'
-                element={
-                  <Protected>
-                    <EditProductPage />
-                  </Protected>
-                }
-              />
-              {/* <Route element={<ProductPage />} path="/products/:id" /> */}
-              <Route element={<LoginPage />} path='/login' />
-              <Route element={<ErrorPage />} path='/*' />
-            </Routes>
-            <Footer />
-          </Router>
-        </ProductsProvider>
+            <Route
+              path="/profile"
+              element={
+                <Protected>
+                  <ProfilePage />
+                </Protected>
+              }
+            />
+            <Route
+              path="/profile/new-product"
+              element={
+                <Protected>
+                  <NewProductPage />
+                </Protected>
+              }
+            />
+            <Route
+              path="/profile/edit-product/:id"
+              element={
+                <Protected>
+                  <EditProductPage />
+                </Protected>
+              }
+            />
+            {/* <Route element={<ProductPage />} path="/products/:id" /> */}
+            <Route element={<LoginPage />} path="/login" />
+            <Route element={<ErrorPage />} path="/*" />
+          </Routes>
+          <Footer />
+        </Router>
       </UserDataProvider>
     </div>
   );
