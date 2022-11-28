@@ -2,8 +2,10 @@ import BackButton from '../components/BackButton'
 import useFetch from '../customHooks/useFetch'
 import { useState } from 'react'
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
 
 const NewProductPage = () => {
+  const navigate = useNavigate()
   const { product, setProduct, loading, error, fetchData } = useFetch(
     '/api/products',
     'POST',
@@ -17,8 +19,21 @@ const NewProductPage = () => {
 
   const [imagePaths, setImagePaths] = useState([])
 
+  const [pathList, setPathList] = useState([])
+
+  const unlinkFiles = async () => {
+    if (pathList.length > 0) {
+      console.log('pathList', pathList)
+      const { data } = await axios.post('/api/upload/unlink', pathList)
+      console.log('data', data)
+    }
+  }
+
   const uploadFileHandler = async (e) => {
     setUploading(true)
+
+    await unlinkFiles()
+
     // object of objects turning into array of objects
     const arrayOfFiles = Object.values(e.target.files)
 
@@ -34,6 +49,9 @@ const NewProductPage = () => {
 
     const { data } = await axios.post('/api/upload', galleryData, config)
 
+    setPathList(data)
+
+    console.log('pathList', pathList)
     const tempImagePaths = await data.map((element) => element.path)
 
     setProduct({
@@ -152,6 +170,15 @@ const NewProductPage = () => {
           <img width="100" key={index} src={path} alt="" />
         ))}
         <button type="Submit">Create</button>
+        <button
+          onClick={(e) => {
+            e.preventDefault()
+            unlinkFiles()
+            navigate('/profile')
+          }}
+        >
+          Cancel
+        </button>
       </form>
     </div>
   )
