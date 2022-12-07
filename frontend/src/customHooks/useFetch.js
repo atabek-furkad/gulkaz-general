@@ -22,7 +22,8 @@ const useFetch = (url, method) => {
   const config = {
     method,
     headers: {
-      'Content-Type': 'application/json',
+      // 'Content-Type': 'application/json',
+      'Content-Type': 'multipart/form-data',
       Authorization: `Bearer ${state.userInfo.token}`,
     },
     body: JSON.stringify({
@@ -31,7 +32,7 @@ const useFetch = (url, method) => {
       countInStock: product.countInStock,
       category: product.category,
       price: product.price,
-      images: product.images,
+      // images: product.imageUpload,
       topProduct: product.topProduct,
     }),
   }
@@ -40,6 +41,7 @@ const useFetch = (url, method) => {
     setLoading(true)
     try {
       const response = await fetch(url, config)
+      console.log('response', response)
       if (response.status >= 400 && response.status < 600) {
         console.log(response)
         throw new Error(response.statusText)

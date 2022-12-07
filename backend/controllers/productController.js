@@ -1,6 +1,7 @@
 const asyncHandler = require('express-async-handler')
 const Product = require('../models/productModel')
 const fs = require('fs')
+const upload = require('../controllers/uploadController')
 
 const getProducts = asyncHandler(async (req, res) => {
   const products = await Product.find({})
@@ -23,21 +24,37 @@ const getProduct = asyncHandler(async (req, res) => {
 })
 
 const addProduct = asyncHandler(async (req, res) => {
-  console.log(req.user)
+  console.log('req.files', req.imageUpload)
+  console.log('hitting?')
   const product = new Product({
     name: req.body.name,
     price: req.body.price,
     user: req.user._id,
-    images: req.body.images,
+    // images: req.body.images,
     category: req.body.category,
     countInStock: req.body.countInStock,
     description: req.body.description,
     topProduct: req.body.topProduct,
   })
 
+  if (req.files.length != 0) {
+    attachFiles(product, req.files)
+  }
+
   const createdProduct = await product.save()
-  res.status(201).json(createdProduct)
+  // res.status(201).json(createdProduct)
 })
+
+function attachFiles(product, files) {
+  files.forEach((file) => {
+    const fileObject = {
+      fileName: file.filename,
+      originalName: file.originalname,
+    }
+    product.attachment.push(fileObject)
+    console.log('attaching file object', fileObject)
+  })
+}
 
 const updateProduct = asyncHandler(async (req, res) => {
   const {
