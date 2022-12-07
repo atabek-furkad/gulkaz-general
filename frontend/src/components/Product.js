@@ -1,9 +1,9 @@
-import React, { useContext } from 'react'
-import { Link } from 'react-router-dom'
-import UserContext from '../context/UserContext'
+import React, { useContext } from 'react';
+import { Link } from 'react-router-dom';
+import UserContext from '../context/UserContext';
 
 const Product = ({ product }) => {
-  const { state } = useContext(UserContext)
+  const { state } = useContext(UserContext);
 
   const handleFormSubmit = async (id) => {
     const config = {
@@ -11,30 +11,30 @@ const Product = ({ product }) => {
       headers: {
         Authorization: `Bearer ${state.userInfo.token}`,
       },
-    }
-    await fetch(`/api/products/${id}`, config)
-  }
+    };
+    await fetch(`/api/products/${id}`, config);
+  };
 
-  const showImages = product.images.map((image) => image.slice(15))
+  const showImages = product.images?.map((image) => image.slice(15));
 
   return (
     <div>
       <form
         onSubmit={() => {
-          handleFormSubmit(product._id)
+          handleFormSubmit(product._id);
         }}
       >
         <Link to={`/products/${product._id}`}>{product.name}</Link>
 
         {showImages?.slice(0, 1).map((image, index) => (
-          <img src={image} alt="product" key={index} height="100" />
+          <img src={image} alt='product' key={index} height='100' />
         ))}
 
         <Link to={`/profile/edit-product/${product._id}`}>Edit</Link>
         <button>Delete</button>
       </form>
     </div>
-  )
-}
+  );
+};
 
-export default Product
+export default Product;

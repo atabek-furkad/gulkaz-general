@@ -9,7 +9,7 @@ const Carousel = () => {
   const Slide = (props) => {
     return (
       <>
-        {props.image?.images.slice(0, 1).map((element, index) => {
+        {props.image?.images?.slice(0, 1).map((element, index) => {
           let sliceImage = element.slice(15);
           return (
             <img
@@ -27,12 +27,8 @@ const Carousel = () => {
 
   useEffect(() => {
     const fetchProducts = async () => {
-      const { data } = await axios.get('/api/products');
-      let getTopProducts = data.filter(
-        (product) => product.topProduct === true
-      );
-      const sliceImages = getTopProducts.slice(0, 5);
-      console.log('items', sliceImages);
+      const { data } = await axios.get('/api/products/topProducts');
+      const sliceImages = data.slice(0, 5);
       setProducts(sliceImages);
     };
     fetchProducts();
