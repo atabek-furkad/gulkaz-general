@@ -1,11 +1,14 @@
-import React, { useEffect, useContext } from 'react'
+import React, { useEffect, useContext, useState } from 'react'
 import { useParams } from 'react-router-dom'
+import axios from 'axios'
 
 import UserContext from '../context/UserContext'
 
 const ProductPage = () => {
   const { state } = useContext(UserContext)
   const params = useParams()
+
+  const [imagePath, setImagePath] = useState()
 
   useEffect(() => {
     const fetchData = async () => {
@@ -15,15 +18,19 @@ const ProductPage = () => {
           Authorization: `Bearer ${state.userInfo.token}`,
         },
       }
-      const response = await fetch(`/api/products/${params.id}`, config)
-      const data = await response.json()
-      console.log('Data', data)
+      const { data } = await axios.get(`/api/products/${params.id}`, config)
+      await setImagePath(data)
+      console.log('Data', imagePath)
     }
 
     fetchData()
   }, [params.id])
 
-  return <div className="ProductPage"></div>
+  return (
+    <div className="ProductPage">
+      <img src={imagePath} width="100" />
+    </div>
+  )
 }
 
 export default ProductPage

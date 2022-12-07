@@ -4,109 +4,111 @@ import UserContext from '../context/UserContext'
 
 const NewProductPage = () => {
   const { state } = useContext(UserContext)
-  const [product, setProduct] = useState({
-    name: '',
-    description: '',
-    countInStock: '',
-    category: '',
-    price: '',
-    images: [],
-    topProduct: '',
-  })
 
-  useEffect(() => {
-    console.log('product', product)
-  }, [product])
+  const [file, setFile] = useState()
 
-  // const [files, setFiles] = useState([])
+  const [name, setName] = useState('')
+  const [description, setDescription] = useState('')
+  const [countInStock, setCountInStock] = useState('')
+  const [category, setCategory] = useState('')
+  const [price, setPrice] = useState('')
+  const [topProduct, setTopProduct] = useState('')
 
-  // const config = {
-  //   method,
-  //   headers: {
-  //     // 'Content-Type': 'application/json',
-  //     'Content-Type': 'multipart/form-data',
-  //     Authorization: `Bearer ${state.userInfo.token}`,
-  //   },
-  //   body: JSON.stringify({
-  //     name: product.name,
-  //     description: product.description,
-  //     countInStock: product.countInStock,
-  //     category: product.category,
-  //     price: product.price,
-  //     // images: product.imageUpload,
-  //     topProduct: product.topProduct,
-  //   }),
-  // }
+  const [image, setImage] = useState()
 
-  const uploadFileHandler = async (e) => {
-    const arrayOfFiles = Object.values(e.target.files)
-    setProduct({
-      ...product,
-      images: arrayOfFiles,
-    })
-  }
+  const submit = async (event) => {
+    event.preventDefault()
 
-  const addProduct = async () => {
+    const formData = new FormData()
+
+    formData.append('image', file)
+    formData.append('name', name)
+    formData.append('description', description)
+    formData.append('countInStock', countInStock)
+    formData.append('category', category)
+    formData.append('price', price)
+    formData.append('topProduct', topProduct)
+
     const config = {
       headers: {
         'Content-Type': 'multipart/form-data',
-        Authorization: `Bearer ${state.userInfo.token}`,
       },
     }
 
-    const { data } = await axios.post('/api/products', product, config)
-    console.log('data', data)
+    const { data } = await axios.post('/api/products', formData, config)
 
-    // const formData = new FormData()
-    // formData.append(
-    //   'jsonBodyData',
-    //   new Blob([JSON.stringify(product)], {
-    //     type: 'application/json',
-    //   }),
-    // )
-    // files.forEach((index) => formData.append('imageUpload', index))
-    // console.log(...formData)
-    // try {
-    //   const response = await fetch('/api/products', {
-    //     headers: {
-    //       'Content-Type': 'application/json',
-    //     },
-    //     method: 'POST',
-    //     body: formData,
-    //   })
-    //   const data = await response.json()
-    // } catch (error) {}
-    // const config = {
-    //   headers: {
-    //     'Content-Type': 'multipart/form-data',
-    //   },
-    // }
-    // const { data } = await axios.post('/api/products', formData, config)
+    // console.log(imagePath)
+    // console.log('data', data)
+
+    const path = data.split('/')[1]
+    console.log('path', path)
+    setImage(path)
   }
 
-  const handleInputChange = (event) => {
-    setProduct({
-      ...product,
-      [event.target.name]: event.target.value,
-    })
-  }
+  // const uploadFileHandler = async (e) => {
+  //   const arrayOfFiles = Object.values(e.target.files)
+  //   setProduct({
+  //     ...product,
+  //     images: arrayOfFiles,
+  //   })
+  // }
+
+  // const addProduct = async () => {
+  //   const config = {
+  //     headers: {
+  //       'Content-Type': 'multipart/form-data',
+  //       Authorization: `Bearer ${state.userInfo.token}`,
+  //     },
+  //   }
+
+  //   const { data } = await axios.post('/api/products', product, config)
+  //   console.log('data', data)
+
+  // const formData = new FormData()
+  // formData.append(
+  //   'jsonBodyData',
+  //   new Blob([JSON.stringify(product)], {
+  //     type: 'application/json',
+  //   }),
+  // )
+  // files.forEach((index) => formData.append('imageUpload', index))
+  // console.log(...formData)
+  // try {
+  //   const response = await fetch('/api/products', {
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //     },
+  //     method: 'POST',
+  //     body: formData,
+  //   })
+  //   const data = await response.json()
+  // } catch (error) {}
+  // const config = {
+  //   headers: {
+  //     'Content-Type': 'multipart/form-data',
+  //   },
+  // }
+  // const { data } = await axios.post('/api/products', formData, config)
+  // }
+
+  // const handleInputChange = (event) => {
+  //   setProduct({
+  //     ...product,
+  //     [event.target.name]: event.target.value,
+  //   })
+  // }
 
   return (
     <div className="NewProductPage">
-      <form
-        onSubmit={(e) => {
-          e.preventDefault()
-          addProduct()
-        }}
-      >
+      <form onSubmit={submit}>
         <div className="input-container">
           <label htmlFor="name">Name</label>
           <input
             id="name"
             name="name"
             type="text"
-            value={product.name}
-            onChange={handleInputChange}
+            value={name}
+            onChange={(e) => setName(e.target.value)}
           />
         </div>
         <div className="input-container">
@@ -115,8 +117,8 @@ const NewProductPage = () => {
             id="description"
             name="description"
             type="text"
-            value={product.description}
-            onChange={handleInputChange}
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
           />
         </div>
         <div className="input-container">
@@ -125,8 +127,8 @@ const NewProductPage = () => {
             id="countInStock"
             name="countInStock"
             type="number"
-            value={product.countInStock}
-            onChange={handleInputChange}
+            value={countInStock}
+            onChange={(e) => setCountInStock(e.target.value)}
           />
         </div>
         <div className="input-container">
@@ -135,8 +137,8 @@ const NewProductPage = () => {
             id="category"
             name="category"
             type="text"
-            value={product.category}
-            onChange={handleInputChange}
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
           />
         </div>
         <div className="input-container">
@@ -145,8 +147,8 @@ const NewProductPage = () => {
             id="price"
             name="price"
             type="number"
-            value={product.price}
-            onChange={handleInputChange}
+            value={price}
+            onChange={(e) => setPrice(e.target.value)}
           />
         </div>
         <div className="input-container">
@@ -154,8 +156,8 @@ const NewProductPage = () => {
           <select
             id="topProduct"
             name="topProduct"
-            value={product && product.topProduct}
-            onChange={handleInputChange}
+            value={topProduct && topProduct}
+            onChange={(e) => setTopProduct(e.target.value)}
           >
             <option hidden>--</option>
             <option value={'false'}>No</option>
@@ -166,15 +168,13 @@ const NewProductPage = () => {
         <div className="input-container">
           <label htmlFor="imageUpload">Choose a picture:</label>
           <input
+            filename={file}
+            onChange={(e) => setFile(e.target.files[0])}
             type="file"
-            id="imageUpload"
-            name="imageUpload"
-            multiple="multiple"
             accept="image/*"
-            // accept="image/png, image/jpeg, image/png"
-            onChange={uploadFileHandler}
           />
         </div>
+        {image && <img src={`/${image}`} width="100" />}
         {/* {pathList
           ? pathList.map((image, index) => {
               const path = image.slice(15)

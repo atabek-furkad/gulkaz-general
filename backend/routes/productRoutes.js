@@ -22,56 +22,57 @@ router.get('/', getProducts)
 // route        GET ~/products/:id
 // access       public
 router.get('/:id', async (req, res) => {
-  const product = await Product.findById(req.params.id)
-
+  // const product = await Product.findById(req.params.id)
+  // const image = product.images[0].fileName
+  // console.log('image', image)
+  // const readStream = fs.createReadStream(`public/${image}`)
+  // console.log('readStream', readStream)
+  // readStream.pipe(res)
   // const filesArray = []
-
   // const folder = fs.readdirSync('public/uploads/attachedFiles')
-
   // folder.forEach((file) => {
   //   if (product.images.some((image) => image.fileName === file)) {
   //     filesArray.push(file)
   //   }
   // })
-
   // const jsonObject = JSON.stringify(filesArray)
-
   // console.log('product', product)
-
   // console.log('filesArray', filesArray)
-
   // console.log('folder', folder)
-
-  if (product) {
-    res.json(product)
-  } else {
-    res.status(404)
-    throw new Error('Product not found')
-  }
+  // if (product) {
+  //   res.json(product)
+  // } else {
+  //   res.status(404)
+  //   throw new Error('Product not found')
+  // }
 })
 
 // description  add single product
 // route        POST ~/products
 // access       private
-router.post('/', protect, upload.any('images'), async (req, res) => {
-  console.log('route')
-
-  const product = new Product({
-    name: req.body.name,
-    price: req.body.price,
-    user: req.user._id,
-    category: req.body.category,
-    countInStock: req.body.countInStock,
-    description: req.body.description,
-    topProduct: req.body.topProduct,
-  })
-
-  if (req.files.length != 0) {
-    attachFiles(product, req.files)
-  }
-
-  const createdProduct = await product.save()
-  res.status(201).json(createdProduct)
+router.post('/', upload.single('image'), async (req, res) => {
+  res.json(req.file.path)
+  // console.log('route', req.file)
+  // const readStream = fs.createReadStream(`images/${req.file.filename}`)
+  // readStream.pipe(res)
+  // const imagePath = req.file.path
+  // const description = req.body.description
+  // console.log(description, imagePath)
+  // res.json(imagePath)
+  // const product = new Product({
+  //   name: req.body.name,
+  //   price: req.body.price,
+  //   user: req.user._id,
+  //   category: req.body.category,
+  //   countInStock: req.body.countInStock,
+  //   description: req.body.description,
+  //   topProduct: req.body.topProduct,
+  // })
+  // if (req.files.length != 0) {
+  //   attachFiles(product, req.files)
+  // }
+  // const createdProduct = await product.save()
+  // res.status(201).json(createdProduct)
 })
 
 // description  update single product
