@@ -1,11 +1,13 @@
-import { useEffect, useState, useContext } from 'react'
+import { useState, useContext } from 'react'
 import axios from 'axios'
 import UserContext from '../context/UserContext'
 
 const NewProductPage = () => {
   const { state } = useContext(UserContext)
 
-  const [file, setFile] = useState()
+  const [files, setFiles] = useState([])
+
+  const [preview, setPreview] = useState([])
 
   const [name, setName] = useState('')
   const [description, setDescription] = useState('')
@@ -14,14 +16,16 @@ const NewProductPage = () => {
   const [price, setPrice] = useState('')
   const [topProduct, setTopProduct] = useState('')
 
-  const [image, setImage] = useState()
+  const [imagesPath, setImagesPath] = useState([])
 
-  const submit = async (event) => {
+  const submitForm = async (event) => {
     event.preventDefault()
 
     const formData = new FormData()
 
-    formData.append('image', file)
+    // each file should be appended separately
+    files.forEach((element) => formData.append('image', element))
+
     formData.append('name', name)
     formData.append('description', description)
     formData.append('countInStock', countInStock)
@@ -32,75 +36,20 @@ const NewProductPage = () => {
     const config = {
       headers: {
         'Content-Type': 'multipart/form-data',
+        Authorization: `Bearer ${state.userInfo.token}`,
       },
     }
 
     const { data } = await axios.post('/api/products', formData, config)
 
-    // console.log(imagePath)
-    // console.log('data', data)
+    console.log('data', data)
 
-    const path = data.split('/')[1]
-    console.log('path', path)
-    setImage(path)
+    setImagesPath(data)
   }
-
-  // const uploadFileHandler = async (e) => {
-  //   const arrayOfFiles = Object.values(e.target.files)
-  //   setProduct({
-  //     ...product,
-  //     images: arrayOfFiles,
-  //   })
-  // }
-
-  // const addProduct = async () => {
-  //   const config = {
-  //     headers: {
-  //       'Content-Type': 'multipart/form-data',
-  //       Authorization: `Bearer ${state.userInfo.token}`,
-  //     },
-  //   }
-
-  //   const { data } = await axios.post('/api/products', product, config)
-  //   console.log('data', data)
-
-  // const formData = new FormData()
-  // formData.append(
-  //   'jsonBodyData',
-  //   new Blob([JSON.stringify(product)], {
-  //     type: 'application/json',
-  //   }),
-  // )
-  // files.forEach((index) => formData.append('imageUpload', index))
-  // console.log(...formData)
-  // try {
-  //   const response = await fetch('/api/products', {
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //     },
-  //     method: 'POST',
-  //     body: formData,
-  //   })
-  //   const data = await response.json()
-  // } catch (error) {}
-  // const config = {
-  //   headers: {
-  //     'Content-Type': 'multipart/form-data',
-  //   },
-  // }
-  // const { data } = await axios.post('/api/products', formData, config)
-  // }
-
-  // const handleInputChange = (event) => {
-  //   setProduct({
-  //     ...product,
-  //     [event.target.name]: event.target.value,
-  //   })
-  // }
 
   return (
     <div className="NewProductPage">
-      <form onSubmit={submit}>
+      <form onSubmit={submitForm}>
         <div className="input-container">
           <label htmlFor="name">Name</label>
           <input
@@ -168,22 +117,36 @@ const NewProductPage = () => {
         <div className="input-container">
           <label htmlFor="imageUpload">Choose a picture:</label>
           <input
-            filename={file}
-            onChange={(e) => setFile(e.target.files[0])}
+            name={files}
+            onChange={(e) => {
+              const filesArray = Object.values(e.target.files)
+
+              setFiles(filesArray)
+
+              filesArray.forEach((element) => {
+                preview.push(URL.createObjectURL(element))
+              })
+
+              console.log('preview', preview)
+            }}
             type="file"
             accept="image/*"
+            multiple
           />
         </div>
-        {image && <img src={`/${image}`} width="100" />}
-        {/* {pathList
-          ? pathList.map((image, index) => {
-              const path = image.slice(15)
-              return <img width="100" key={index} src={path} alt="" />
-            })
-          : product.images.map((element, index) => {
-              const path = element.slice(15)
-              return <img src={path} alt="product" width="100" key={index} />
-            })} */}
+        {preview?.map((element, index) => {
+          return <img src={element} key={index} width="100" />
+        })}
+
+        {imagesPath &&
+          imagesPath.map((element, index) => {
+            return (
+              <div key={index}>
+                <img src={`/${element.filename}`} width="100" alt="product" />
+                <p>{element.originalname}</p>
+              </div>
+            )
+          })}
         <button type="Submit">Create</button>
       </form>
     </div>

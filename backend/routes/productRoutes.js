@@ -50,8 +50,26 @@ router.get('/:id', async (req, res) => {
 // description  add single product
 // route        POST ~/products
 // access       private
-router.post('/', upload.single('image'), async (req, res) => {
-  res.json(req.file.path)
+router.post('/', protect, upload.any('image'), async (req, res) => {
+  console.log('req.files', req)
+  const product = new Product({
+    name: req.body.name,
+    price: req.body.price,
+    user: req.user._id,
+    category: req.body.category,
+    countInStock: req.body.countInStock,
+    description: req.body.description,
+    topProduct: req.body.topProduct,
+  })
+
+  // attach files if there is any
+  if (req.files.length != 0) {
+    attachFiles(product, req.files)
+  }
+
+  const createdProduct = await product.save()
+
+  res.json(req.files)
   // console.log('route', req.file)
   // const readStream = fs.createReadStream(`images/${req.file.filename}`)
   // readStream.pipe(res)
@@ -59,19 +77,7 @@ router.post('/', upload.single('image'), async (req, res) => {
   // const description = req.body.description
   // console.log(description, imagePath)
   // res.json(imagePath)
-  // const product = new Product({
-  //   name: req.body.name,
-  //   price: req.body.price,
-  //   user: req.user._id,
-  //   category: req.body.category,
-  //   countInStock: req.body.countInStock,
-  //   description: req.body.description,
-  //   topProduct: req.body.topProduct,
-  // })
-  // if (req.files.length != 0) {
-  //   attachFiles(product, req.files)
-  // }
-  // const createdProduct = await product.save()
+
   // res.status(201).json(createdProduct)
 })
 
