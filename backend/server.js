@@ -24,8 +24,9 @@ app.use('/api/products', productRoutes)
 app.use('/api/users', userRoutes)
 app.use('/api/upload', uploadRoutes)
 
-// app.use('uploads', express.static(path.join(__dirname, '/uploads')))
-app.use(express.static('public'))
+app.use('uploads', express.static('/uploads'))
+// app.use(express.static('public'))
+// app.use('/public/upload', express.static('images'))
 
 app.use(notFound)
 app.use(errorHandler)

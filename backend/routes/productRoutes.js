@@ -1,5 +1,7 @@
 const express = require('express')
 const router = express.Router()
+const fs = require('fs')
+const path = require('path')
 const Product = require('../models/productModel')
 const { protect } = require('../middleware/authMiddleware')
 const {
@@ -19,14 +21,41 @@ router.get('/', getProducts)
 // description  fetch single product
 // route        GET ~/products/:id
 // access       public
-router.get('/:id', getProduct)
+router.get('/:id', async (req, res) => {
+  const product = await Product.findById(req.params.id)
+
+  // const filesArray = []
+
+  // const folder = fs.readdirSync('public/uploads/attachedFiles')
+
+  // folder.forEach((file) => {
+  //   if (product.images.some((image) => image.fileName === file)) {
+  //     filesArray.push(file)
+  //   }
+  // })
+
+  // const jsonObject = JSON.stringify(filesArray)
+
+  // console.log('product', product)
+
+  // console.log('filesArray', filesArray)
+
+  // console.log('folder', folder)
+
+  if (product) {
+    res.json(product)
+  } else {
+    res.status(404)
+    throw new Error('Product not found')
+  }
+})
 
 // description  add single product
 // route        POST ~/products
 // access       private
 router.post('/', protect, upload.any('images'), async (req, res) => {
-  // console.log('req', req.files)
-  // console.log('hitting?')
+  console.log('route')
+
   const product = new Product({
     name: req.body.name,
     price: req.body.price,

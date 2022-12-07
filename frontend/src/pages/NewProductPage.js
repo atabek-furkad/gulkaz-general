@@ -170,6 +170,7 @@ const NewProductPage = () => {
             id="imageUpload"
             name="imageUpload"
             multiple="multiple"
+            accept="image/*"
             // accept="image/png, image/jpeg, image/png"
             onChange={uploadFileHandler}
           />

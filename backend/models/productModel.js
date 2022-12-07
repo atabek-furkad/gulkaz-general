@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-const attachedFileBasePath = 'uploads/attachedFiles'
+// const attachedFileBasePath = 'uploads'
 
 const productSchema = mongoose.Schema(
   {
@@ -43,20 +43,20 @@ const productSchema = mongoose.Schema(
   },
 )
 
-productSchema.virtual('attachedFilePath').get(function () {
-  // console.log('model this.attachment', this.attachment)
-  if (this.attachment.length != 0) {
-    return this.attachment.map((element) => {
-      // console.log(element)
-      return {
-        source: path.join('/', attachedFileBasePath, element.fileName),
-        name: element.originalName,
-      }
-    })
-  }
-})
+// productSchema.virtual('attachedFilePath').get(function () {
+//   console.log('virtual')
+//   if (this.images.length != 0) {
+//     return this.images.map((element) => {
+//       // console.log(element)
+//       return {
+//         source: path.join('/', attachedFileBasePath, element.fileName),
+//         name: element.originalName,
+//       }
+//     })
+//   }
+// })
 
 const Product = mongoose.model('Product', productSchema)
 
 module.exports = Product
-module.exports.attachedFileBasePath = attachedFileBasePath
+// module.exports.attachedFileBasePath = attachedFileBasePath
