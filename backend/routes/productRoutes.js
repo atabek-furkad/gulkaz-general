@@ -69,7 +69,7 @@ router.post('/', protect, upload.any('image'), async (req, res) => {
 
   const createdProduct = await product.save()
 
-  res.json(req.files)
+  res.status(201).json(createdProduct)
   // console.log('route', req.file)
   // const readStream = fs.createReadStream(`images/${req.file.filename}`)
   // readStream.pipe(res)
@@ -77,8 +77,6 @@ router.post('/', protect, upload.any('image'), async (req, res) => {
   // const description = req.body.description
   // console.log(description, imagePath)
   // res.json(imagePath)
-
-  // res.status(201).json(createdProduct)
 })
 
 // description  update single product

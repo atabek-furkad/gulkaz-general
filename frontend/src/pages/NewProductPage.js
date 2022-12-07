@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import axios from 'axios'
 import UserContext from '../context/UserContext'
 
@@ -17,6 +17,18 @@ const NewProductPage = () => {
   const [topProduct, setTopProduct] = useState('')
 
   const [imagesPath, setImagesPath] = useState([])
+
+  const [previewState, setPreviewState] = useState(false)
+
+  useEffect(() => {
+    setPreviewState(true)
+    let timer = setTimeout(() => {
+      setPreviewState(false)
+    }, 2500)
+    return () => {
+      clearTimeout(timer)
+    }
+  }, [preview])
 
   const submitForm = async (event) => {
     event.preventDefault()
@@ -44,7 +56,7 @@ const NewProductPage = () => {
 
     console.log('data', data)
 
-    setImagesPath(data)
+    setImagesPath(data.images)
   }
 
   return (
@@ -117,32 +129,39 @@ const NewProductPage = () => {
         <div className="input-container">
           <label htmlFor="imageUpload">Choose a picture:</label>
           <input
-            name={files}
+            name="imageUpload"
             onChange={(e) => {
               const filesArray = Object.values(e.target.files)
 
               setFiles(filesArray)
 
-              filesArray.forEach((element) => {
-                preview.push(URL.createObjectURL(element))
-              })
+              // filesArray.forEach((element) => {
+              //   preview.push(URL.createObjectURL(element))
+              // })
 
-              console.log('preview', preview)
+              setPreview(filesArray)
+
+              setPreviewState(true)
             }}
             type="file"
             accept="image/*"
             multiple
           />
         </div>
-        {preview?.map((element, index) => {
-          return <img src={element} key={index} width="100" />
-        })}
+        {previewState &&
+          preview?.map((element, index) => {
+            const link = URL.createObjectURL(element)
+            return (
+              <img src={link} key={index} width="100" alt="preview product" />
+            )
+          })}
+        {previewState && <p>Just a preview!</p>}
 
         {imagesPath &&
           imagesPath.map((element, index) => {
             return (
               <div key={index}>
-                <img src={`/${element.filename}`} width="100" alt="product" />
+                <img src={`/${element.fileName}`} width="100" alt="product" />
                 <p>{element.originalname}</p>
               </div>
             )
