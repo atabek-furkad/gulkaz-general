@@ -8,6 +8,7 @@ const {
   updateProduct,
   deleteProduct,
   getTopProducts,
+  getAllCategories,
 } = require('../controllers/productController');
 
 // description  fetch all products
@@ -19,6 +20,11 @@ router.get('/', getProducts);
 // route        GET ~/topProducts
 // access       public
 router.get('/topProducts', getTopProducts);
+
+// get Top Products fetch all topProducts
+// route        GET ~/topProducts
+// access       public
+router.get('/categories', getAllCategories);
 
 // description  fetch single product
 // route        GET ~/products/:id

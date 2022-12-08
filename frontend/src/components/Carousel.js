@@ -27,9 +27,13 @@ const Carousel = () => {
 
   useEffect(() => {
     const fetchProducts = async () => {
-      const { data } = await axios.get('/api/products/topProducts');
-      const sliceImages = data.slice(0, 5);
-      setProducts(sliceImages);
+      try {
+        const { data } = await axios.get('/api/products/topProducts');
+        const sliceImages = data.slice(0, 5);
+        setProducts(sliceImages);
+      } catch (error) {
+        console.log(error);
+      }
     };
     fetchProducts();
   }, []);

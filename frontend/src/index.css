@@ -76,7 +76,7 @@ footer {
   color: red;
 }
 
-/* Button */
+/* Carousel Button  */
 .slideshowDots {
   text-align: center;
 }
@@ -93,4 +93,21 @@ footer {
 
 .slideshowDot.active {
   background-color: #242225;
+}
+
+/* Category Styles */
+.category-container {
+  position: relative;
+}
+
+.show-category {
+  background-color: #c4c4c4;
+  position: absolute;
+  cursor: pointer;
+  width: 200px;
+  padding: 5px;
+}
+
+.show-category ul {
+  list-style-type: none;
 }
