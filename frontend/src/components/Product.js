@@ -24,7 +24,7 @@ const Product = ({ product }) => {
           handleFormSubmit(product._id)
         }}
       >
-        <Link to={`/products/${product._id}`}>{product.name}</Link>
+        {/* <Link to={`/products/${product._id}`}>{product.name}</Link> */}
 
         {/* {showImages?.slice(0, 1).map((image, index) => (
           <img src={image} alt="product" key={index} height="100" />

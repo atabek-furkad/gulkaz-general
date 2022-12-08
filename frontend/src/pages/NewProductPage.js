@@ -7,8 +7,6 @@ const NewProductPage = () => {
 
   const [files, setFiles] = useState([])
 
-  const [preview, setPreview] = useState([])
-
   const [name, setName] = useState('')
   const [description, setDescription] = useState('')
   const [countInStock, setCountInStock] = useState('')
@@ -18,17 +16,18 @@ const NewProductPage = () => {
 
   const [imagesPath, setImagesPath] = useState([])
 
-  const [previewState, setPreviewState] = useState(false)
+  // const [preview, setPreview] = useState([])
+  // const [previewState, setPreviewState] = useState(false)
 
-  useEffect(() => {
-    setPreviewState(true)
-    let timer = setTimeout(() => {
-      setPreviewState(false)
-    }, 2500)
-    return () => {
-      clearTimeout(timer)
-    }
-  }, [preview])
+  // useEffect(() => {
+  //   setPreviewState(true)
+  //   let timer = setTimeout(() => {
+  //     setPreviewState(false)
+  //   }, 2500)
+  //   return () => {
+  //     clearTimeout(timer)
+  //   }
+  // }, [preview])
 
   const submitForm = async (event) => {
     event.preventDefault()
@@ -61,6 +60,7 @@ const NewProductPage = () => {
 
   return (
     <div className="NewProductPage">
+      <h1>New Product Page</h1>
       <form onSubmit={submitForm}>
         <div className="input-container">
           <label htmlFor="name">Name</label>
@@ -132,30 +132,23 @@ const NewProductPage = () => {
             name="imageUpload"
             onChange={(e) => {
               const filesArray = Object.values(e.target.files)
-
               setFiles(filesArray)
-
-              // filesArray.forEach((element) => {
-              //   preview.push(URL.createObjectURL(element))
-              // })
-
-              setPreview(filesArray)
-
-              setPreviewState(true)
+              // setPreview(filesArray)
+              // setPreviewState(true)
             }}
             type="file"
             accept="image/*"
             multiple
           />
         </div>
-        {previewState &&
+        {/* {previewState &&
           preview?.map((element, index) => {
             const link = URL.createObjectURL(element)
             return (
               <img src={link} key={index} width="100" alt="preview product" />
             )
           })}
-        {previewState && <p>Just a preview!</p>}
+        {previewState && <p>Just a preview!</p>} */}
 
         {imagesPath &&
           imagesPath.map((element, index) => {

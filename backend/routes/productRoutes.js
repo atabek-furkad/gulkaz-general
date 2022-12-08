@@ -22,7 +22,14 @@ router.get('/', getProducts)
 // route        GET ~/products/:id
 // access       public
 router.get('/:id', async (req, res) => {
-  // const product = await Product.findById(req.params.id)
+  const product = await Product.findById(req.params.id)
+  if (product) {
+    res.json(product)
+  } else {
+    res.status(404)
+    throw new Error('Product not found')
+  }
+
   // const image = product.images[0].fileName
   // console.log('image', image)
   // const readStream = fs.createReadStream(`public/${image}`)
@@ -51,7 +58,6 @@ router.get('/:id', async (req, res) => {
 // route        POST ~/products
 // access       private
 router.post('/', protect, upload.any('image'), async (req, res) => {
-  console.log('req.files', req)
   const product = new Product({
     name: req.body.name,
     price: req.body.price,
@@ -70,19 +76,39 @@ router.post('/', protect, upload.any('image'), async (req, res) => {
   const createdProduct = await product.save()
 
   res.status(201).json(createdProduct)
-  // console.log('route', req.file)
-  // const readStream = fs.createReadStream(`images/${req.file.filename}`)
-  // readStream.pipe(res)
-  // const imagePath = req.file.path
-  // const description = req.body.description
-  // console.log(description, imagePath)
-  // res.json(imagePath)
 })
 
 // description  update single product
 // route        PUT ~/products
 // access       private
-router.put('/:id', protect, updateProduct)
+router.put('/:id', protect, upload.any('image'), async (req, res) => {
+  const {
+    name,
+    description,
+    countInStock,
+    category,
+    price,
+    topProduct,
+  } = req.body
+
+  const product = await Product.findById(req.params.id)
+
+  if (product) {
+    product.name = name
+    product.description = description
+    product.countInStock = countInStock
+    product.category = category
+    product.price = price
+    product.topProduct = topProduct
+
+    // attach files if there is any
+    if (req.files.length != 0) {
+      attachFiles(product, req.files)
+    }
+    const updatedProduct = await product.save()
+    res.json(updatedProduct)
+  }
+})
 
 // description  delete single product
 // route        DELETE ~/products/:id
@@ -90,16 +116,13 @@ router.put('/:id', protect, updateProduct)
 router.delete('/:id', protect, deleteProduct)
 
 function attachFiles(product, files) {
-  console.log('function attach product', product)
-  console.log('function attach files', files)
   files.forEach((file) => {
     const fileObject = {
       fileName: file.filename,
       originalName: file.originalname,
     }
-    // console.log('files')
+
     product.images.push(fileObject)
-    // console.log('attaching file object', fileObject)
   })
 }
 
