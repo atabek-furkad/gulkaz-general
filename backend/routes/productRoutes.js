@@ -68,8 +68,9 @@ router.post('/', protect, upload.any('image'), async (req, res) => {
     topProduct: req.body.topProduct,
   })
 
-  // attach files if there is any
+  // check if there is any new attached images
   if (req.files.length != 0) {
+    // push names of images to the product.images array, if there is any
     attachFiles(product, req.files)
   }
 
@@ -101,8 +102,24 @@ router.put('/:id', protect, upload.any('image'), async (req, res) => {
     product.price = price
     product.topProduct = topProduct
 
-    // attach files if there is any
+    // check if there is any new attached images
     if (req.files.length != 0) {
+      // delete from the uploads directory old images
+      await product.images.forEach((image) => {
+        const unlinkFile = path.join(
+          __dirname,
+          '..',
+          '..',
+          'uploads',
+          image.fileName,
+        )
+        fs.unlink(unlinkFile, (err) => {
+          if (err) throw err
+        })
+      })
+      // clear the list of images
+      product.images = []
+      // push the new uploaded images' details to the product.image array
       attachFiles(product, req.files)
     }
     const updatedProduct = await product.save()
