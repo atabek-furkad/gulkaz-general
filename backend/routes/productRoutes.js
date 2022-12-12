@@ -35,15 +35,4 @@ router.put('/:id', protect, upload.any('image'), updateProduct)
 // access       private
 router.delete('/:id', protect, deleteProduct)
 
-function attachFiles(product, files) {
-  files.forEach((file) => {
-    const fileObject = {
-      fileName: file.filename,
-      originalName: file.originalname,
-    }
-
-    product.images.push(fileObject)
-  })
-}
-
 module.exports = router

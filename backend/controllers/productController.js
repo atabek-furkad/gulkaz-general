@@ -68,19 +68,7 @@ const updateProduct = asyncHandler(async (req, res) => {
     // check if there is any new attached images
     if (req.files.length != 0) {
       // delete from the uploads directory old images
-      await product.images.forEach((image) => {
-        console.log(path.join(__dirname, '..', '..', 'uploads', image.fileName))
-        const unlinkFile = path.join(
-          __dirname,
-          '..',
-          '..',
-          'uploads',
-          image.fileName,
-        )
-        fs.unlink(unlinkFile, (err) => {
-          if (err) throw err
-        })
-      })
+      await deleteFiles(product)
       // clear the list of images
       product.images = []
       // push the new uploaded images' details to the product.image array
@@ -98,15 +86,11 @@ const deleteProduct = asyncHandler(async (req, res) => {
   // const unlinkFile = await product.images.slice(1)
 
   if (product) {
+    // remove the product from the database
     await product.remove()
 
-    // fs.unlink(unlinkFile, (err) => {
-    //   if (err) {
-    //     throw err
-    //   }
-
-    //   console.log('Delete File successfully.')
-    // })
+    // delete the files from the uploads directory
+    await deleteFiles(product)
 
     res.json({ message: 'Product removed' })
   } else {
@@ -123,6 +107,22 @@ function attachFiles(product, files) {
     }
 
     product.images.push(fileObject)
+  })
+}
+
+async function deleteFiles(product) {
+  await product.images.forEach((image) => {
+    console.log(path.join(__dirname, '..', '..', 'uploads', image.fileName))
+    const unlinkFile = path.join(
+      __dirname,
+      '..',
+      '..',
+      'uploads',
+      image.fileName,
+    )
+    fs.unlink(unlinkFile, (err) => {
+      if (err) throw err
+    })
   })
 }
 
