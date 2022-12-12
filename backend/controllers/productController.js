@@ -1,7 +1,7 @@
 const asyncHandler = require('express-async-handler')
 const Product = require('../models/productModel')
 const fs = require('fs')
-const upload = require('../controllers/uploadController')
+const path = require('path')
 
 const getProducts = asyncHandler(async (req, res) => {
   const products = await Product.find({})
@@ -13,40 +13,37 @@ const getProducts = asyncHandler(async (req, res) => {
   }
 })
 
-const getProduct = asyncHandler(async (req, res) => {})
+const getProduct = asyncHandler(async (req, res) => {
+  const product = await Product.findById(req.params.id)
+  if (product) {
+    res.json(product)
+  } else {
+    res.status(404)
+    throw new Error('Product not found')
+  }
+})
 
 const addProduct = asyncHandler(async (req, res) => {
-  console.log('req.files', req.imageUpload)
-  console.log('hitting?')
   const product = new Product({
     name: req.body.name,
     price: req.body.price,
     user: req.user._id,
-    // images: req.body.images,
     category: req.body.category,
     countInStock: req.body.countInStock,
     description: req.body.description,
     topProduct: req.body.topProduct,
   })
 
+  // check if there is any new attached images
   if (req.files.length != 0) {
+    // push names of images to the product.images array, if there is any
     attachFiles(product, req.files)
   }
 
   const createdProduct = await product.save()
-  // res.status(201).json(createdProduct)
-})
 
-function attachFiles(product, files) {
-  files.forEach((file) => {
-    const fileObject = {
-      fileName: file.filename,
-      originalName: file.originalname,
-    }
-    product.attachment.push(fileObject)
-    console.log('attaching file object', fileObject)
-  })
-}
+  res.status(201).json(createdProduct)
+})
 
 const updateProduct = asyncHandler(async (req, res) => {
   const {
@@ -55,7 +52,6 @@ const updateProduct = asyncHandler(async (req, res) => {
     countInStock,
     category,
     price,
-    images,
     topProduct,
   } = req.body
 
@@ -67,13 +63,31 @@ const updateProduct = asyncHandler(async (req, res) => {
     product.countInStock = countInStock
     product.category = category
     product.price = price
-    product.images = images
     product.topProduct = topProduct
+
+    // check if there is any new attached images
+    if (req.files.length != 0) {
+      // delete from the uploads directory old images
+      await product.images.forEach((image) => {
+        console.log(path.join(__dirname, '..', '..', 'uploads', image.fileName))
+        const unlinkFile = path.join(
+          __dirname,
+          '..',
+          '..',
+          'uploads',
+          image.fileName,
+        )
+        fs.unlink(unlinkFile, (err) => {
+          if (err) throw err
+        })
+      })
+      // clear the list of images
+      product.images = []
+      // push the new uploaded images' details to the product.image array
+      attachFiles(product, req.files)
+    }
     const updatedProduct = await product.save()
     res.json(updatedProduct)
-  } else {
-    res.status(404)
-    throw new Error('Product not found')
   }
 })
 
@@ -100,6 +114,17 @@ const deleteProduct = asyncHandler(async (req, res) => {
     throw new Error('Product not found')
   }
 })
+
+function attachFiles(product, files) {
+  files.forEach((file) => {
+    const fileObject = {
+      fileName: file.filename,
+      originalName: file.originalname,
+    }
+
+    product.images.push(fileObject)
+  })
+}
 
 module.exports = {
   getProducts,

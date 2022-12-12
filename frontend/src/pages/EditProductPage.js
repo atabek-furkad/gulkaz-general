@@ -181,7 +181,7 @@ const EditProductPage = () => {
               </div>
             )
           })}
-        <button type="Submit">Create</button>
+        <button type="Submit">Edit</button>
       </form>
     </div>
   )
