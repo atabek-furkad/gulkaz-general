@@ -137,17 +137,17 @@ const ProductForm = ({
 
         <div className="input-container">
           {uploading && <h2>Uploading...</h2>}
-          <label htmlFor="image-upload">Choose a picture:</label>
+          <label htmlFor="imageUpload">Choose a picture:</label>
           <input
             type="file"
-            id="image-upload"
-            name="image-upload"
+            id="imageUpload"
+            name="imageUpload"
             multiple="multiple"
-            accept="image/png, image/jpeg, image/png"
-            onChange={uploadFileHandler}
+            // accept="image/png, image/jpeg, image/png"
+            // onChange={uploadFileHandler}
           />
         </div>
-        {pathList
+        {/* {pathList
           ? pathList.map((image, index) => {
               const path = image.slice(15)
               return <img width="100" key={index} src={path} alt="" />
@@ -155,7 +155,7 @@ const ProductForm = ({
           : product.images.map((element, index) => {
               const path = element.slice(15)
               return <img src={path} alt="product" width="100" key={index} />
-            })}
+            })} */}
         <button type="Submit">Create</button>
         <button
           onClick={(e) => {
