@@ -135,7 +135,7 @@ async function deleteFiles(product) {
       image.fileName
     );
     fs.unlink(unlinkFile, (err) => {
-      if (err) throw err;
+      if (err) console.log(err);
     });
   });
 }
