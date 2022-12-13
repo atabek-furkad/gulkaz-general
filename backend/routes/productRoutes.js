@@ -1,38 +1,50 @@
-const express = require('express')
-const router = express.Router()
-const { protect } = require('../middleware/authMiddleware')
+const express = require('express');
+const router = express.Router();
+const { protect } = require('../middleware/authMiddleware');
 const {
   getProducts,
   getProduct,
   addProduct,
   updateProduct,
   deleteProduct,
-} = require('../controllers/productController')
-const upload = require('../controllers/uploadController')
+  getAllCategories,
+  getTopProducts,
+} = require('../controllers/productController');
+const upload = require('../controllers/uploadController');
 
 // description  fetch all products
 // route        GET ~/products
 // access       public
-router.get('/', getProducts)
+router.get('/', getProducts);
+
+// description  fetch all products
+// route        GET ~/products/categories
+// access       public
+router.get('/categories', getAllCategories);
+
+// description  fetch all products
+// route        GET ~/products/categories
+// access       public
+router.get('/topProducts', getTopProducts);
 
 // description  fetch single product
 // route        GET ~/products/:id
 // access       public
-router.get('/:id', getProduct)
+router.get('/:id', getProduct);
 
 // description  add single product
 // route        POST ~/products
 // access       private
-router.post('/', protect, upload.any('image'), addProduct)
+router.post('/', protect, upload.any('image'), addProduct);
 
 // description  update single product
 // route        PUT ~/products
 // access       private
-router.put('/:id', protect, upload.any('image'), updateProduct)
+router.put('/:id', protect, upload.any('image'), updateProduct);
 
 // description  delete single product
 // route        DELETE ~/products/:id
 // access       private
-router.delete('/:id', protect, deleteProduct)
+router.delete('/:id', protect, deleteProduct);
 
-module.exports = router
+module.exports = router;

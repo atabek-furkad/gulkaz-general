@@ -1,27 +1,47 @@
-const asyncHandler = require('express-async-handler')
-const Product = require('../models/productModel')
-const fs = require('fs')
-const path = require('path')
+const asyncHandler = require('express-async-handler');
+const Product = require('../models/productModel');
+const fs = require('fs');
+const path = require('path');
 
 const getProducts = asyncHandler(async (req, res) => {
-  const products = await Product.find({})
+  const products = await Product.find({});
   if (products.length > 0) {
-    res.json(products)
+    res.json(products);
   } else {
-    res.status(404)
-    throw new Error('Products not found')
+    res.status(404);
+    throw new Error('Products not found');
   }
-})
+});
 
 const getProduct = asyncHandler(async (req, res) => {
-  const product = await Product.findById(req.params.id)
+  const product = await Product.findById(req.params.id);
   if (product) {
-    res.json(product)
+    res.json(product);
   } else {
-    res.status(404)
-    throw new Error('Product not found')
+    res.status(404);
+    throw new Error('Product not found');
   }
-})
+});
+
+const getAllCategories = asyncHandler(async (req, res) => {
+  const categories = await Product.find().distinct('category');
+  if (categories) {
+    res.json(categories);
+  } else {
+    res.status(404);
+    throw new Error('there is no such category found');
+  }
+});
+
+const getTopProducts = asyncHandler(async (req, res) => {
+  const showTopProduct = await Product.find({ topProduct: { $eq: true } });
+  if (showTopProduct) {
+    res.json(showTopProduct);
+  } else {
+    res.status(404);
+    throw new Error('Please select carousel item');
+  }
+});
 
 const addProduct = asyncHandler(async (req, res) => {
   const product = new Product({
@@ -32,98 +52,92 @@ const addProduct = asyncHandler(async (req, res) => {
     countInStock: req.body.countInStock,
     description: req.body.description,
     topProduct: req.body.topProduct,
-  })
+  });
 
   // check if there is any new attached images
   if (req.files.length != 0) {
     // push names of images to the product.images array, if there is any
-    attachFiles(product, req.files)
+    attachFiles(product, req.files);
   }
 
-  const createdProduct = await product.save()
+  const createdProduct = await product.save();
 
-  res.status(201).json(createdProduct)
-})
+  res.status(201).json(createdProduct);
+});
 
 const updateProduct = asyncHandler(async (req, res) => {
-  const {
-    name,
-    description,
-    countInStock,
-    category,
-    price,
-    topProduct,
-  } = req.body
+  const { name, description, countInStock, category, price, topProduct } =
+    req.body;
 
-  const product = await Product.findById(req.params.id)
+  const product = await Product.findById(req.params.id);
 
   if (product) {
-    product.name = name
-    product.description = description
-    product.countInStock = countInStock
-    product.category = category
-    product.price = price
-    product.topProduct = topProduct
+    product.name = name;
+    product.description = description;
+    product.countInStock = countInStock;
+    product.category = category;
+    product.price = price;
+    product.topProduct = topProduct;
 
     // check if there is any new attached images
     if (req.files.length != 0) {
       // delete from the uploads directory old images
-      await deleteFiles(product)
+      await deleteFiles(product);
       // clear the list of images
-      product.images = []
+      product.images = [];
       // push the new uploaded images' details to the product.image array
-      attachFiles(product, req.files)
+      attachFiles(product, req.files);
     }
-    const updatedProduct = await product.save()
-    res.json(updatedProduct)
+    const updatedProduct = await product.save();
+    res.json(updatedProduct);
   }
-})
+});
 
 const deleteProduct = asyncHandler(async (req, res) => {
-  const product = await Product.findById(req.params.id)
+  const product = await Product.findById(req.params.id);
 
   // needs to be rewritten to delete all the images from storage of the particular product
   // const unlinkFile = await product.images.slice(1)
 
   if (product) {
     // remove the product from the database
-    await product.remove()
+    await product.remove();
 
     // delete the files from the uploads directory
-    await deleteFiles(product)
+    await deleteFiles(product);
 
-    res.json({ message: 'Product removed' })
+    res.json({ message: 'Product removed' });
   } else {
-    res.status(404)
-    throw new Error('Product not found')
+    res.status(404);
+    throw new Error('Product not found');
   }
-})
+});
 
 function attachFiles(product, files) {
   files.forEach((file) => {
     const fileObject = {
       fileName: file.filename,
       originalName: file.originalname,
-    }
+    };
 
-    product.images.push(fileObject)
-  })
+    product.images.push(fileObject);
+  });
 }
 
 async function deleteFiles(product) {
   await product.images.forEach((image) => {
-    console.log(path.join(__dirname, '..', '..', 'uploads', image.fileName))
+    console.log(path.join(__dirname, '..', '..', 'uploads', image.fileName));
     const unlinkFile = path.join(
       __dirname,
       '..',
       '..',
       'uploads',
-      image.fileName,
-    )
+      image.fileName
+    );
     fs.unlink(unlinkFile, (err) => {
-      if (err) throw err
-    })
-  })
+      if (err) throw err;
+    });
+  });
 }
 
 module.exports = {
@@ -132,4 +146,6 @@ module.exports = {
   addProduct,
   updateProduct,
   deleteProduct,
-}
+  getAllCategories,
+  getTopProducts,
+};

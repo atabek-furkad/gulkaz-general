@@ -1,20 +1,20 @@
-import { useState, useEffect, useContext } from 'react'
-import axios from 'axios'
-import UserContext from '../context/UserContext'
+import { useState, useContext } from 'react';
+import axios from 'axios';
+import UserContext from '../context/UserContext';
 
 const NewProductPage = () => {
-  const { state } = useContext(UserContext)
+  const { state } = useContext(UserContext);
 
-  const [files, setFiles] = useState([])
+  const [files, setFiles] = useState([]);
 
-  const [name, setName] = useState('')
-  const [description, setDescription] = useState('')
-  const [countInStock, setCountInStock] = useState('')
-  const [category, setCategory] = useState('')
-  const [price, setPrice] = useState('')
-  const [topProduct, setTopProduct] = useState('')
+  const [name, setName] = useState('');
+  const [description, setDescription] = useState('');
+  const [countInStock, setCountInStock] = useState('');
+  const [category, setCategory] = useState('');
+  const [price, setPrice] = useState('');
+  const [topProduct, setTopProduct] = useState('');
 
-  const [imagesPath, setImagesPath] = useState([])
+  const [imagesPath, setImagesPath] = useState([]);
 
   // const [preview, setPreview] = useState([])
   // const [previewState, setPreviewState] = useState(false)
@@ -30,93 +30,93 @@ const NewProductPage = () => {
   // }, [preview])
 
   const submitForm = async (event) => {
-    event.preventDefault()
+    event.preventDefault();
 
-    const formData = new FormData()
+    const formData = new FormData();
 
     // each file should be appended separately
-    files.forEach((element) => formData.append('image', element))
+    files.forEach((element) => formData.append('image', element));
 
-    formData.append('name', name)
-    formData.append('description', description)
-    formData.append('countInStock', countInStock)
-    formData.append('category', category)
-    formData.append('price', price)
-    formData.append('topProduct', topProduct)
+    formData.append('name', name);
+    formData.append('description', description);
+    formData.append('countInStock', countInStock);
+    formData.append('category', category);
+    formData.append('price', price);
+    formData.append('topProduct', topProduct);
 
     const config = {
       headers: {
         'Content-Type': 'multipart/form-data',
         Authorization: `Bearer ${state.userInfo.token}`,
       },
-    }
+    };
 
-    const { data } = await axios.post('/api/products', formData, config)
+    const { data } = await axios.post('/api/products', formData, config);
 
-    console.log('data', data)
+    console.log('data', data);
 
-    setImagesPath(data.images)
-  }
+    setImagesPath(data.images);
+  };
 
   return (
-    <div className="NewProductPage">
+    <div className='NewProductPage'>
       <h1>New Product Page</h1>
       <form onSubmit={submitForm}>
-        <div className="input-container">
-          <label htmlFor="name">Name</label>
+        <div className='input-container'>
+          <label htmlFor='name'>Name</label>
           <input
-            id="name"
-            name="name"
-            type="text"
+            id='name'
+            name='name'
+            type='text'
             value={name}
             onChange={(e) => setName(e.target.value)}
           />
         </div>
-        <div className="input-container">
-          <label htmlFor="description">Description</label>
+        <div className='input-container'>
+          <label htmlFor='description'>Description</label>
           <input
-            id="description"
-            name="description"
-            type="text"
+            id='description'
+            name='description'
+            type='text'
             value={description}
             onChange={(e) => setDescription(e.target.value)}
           />
         </div>
-        <div className="input-container">
-          <label htmlFor="countInStock">CountInStock</label>
+        <div className='input-container'>
+          <label htmlFor='countInStock'>CountInStock</label>
           <input
-            id="countInStock"
-            name="countInStock"
-            type="number"
+            id='countInStock'
+            name='countInStock'
+            type='number'
             value={countInStock}
             onChange={(e) => setCountInStock(e.target.value)}
           />
         </div>
-        <div className="input-container">
-          <label htmlFor="category">Category</label>
+        <div className='input-container'>
+          <label htmlFor='category'>Category</label>
           <input
-            id="category"
-            name="category"
-            type="text"
+            id='category'
+            name='category'
+            type='text'
             value={category}
             onChange={(e) => setCategory(e.target.value)}
           />
         </div>
-        <div className="input-container">
-          <label htmlFor="price">Price</label>
+        <div className='input-container'>
+          <label htmlFor='price'>Price</label>
           <input
-            id="price"
-            name="price"
-            type="number"
+            id='price'
+            name='price'
+            type='number'
             value={price}
             onChange={(e) => setPrice(e.target.value)}
           />
         </div>
-        <div className="input-container">
-          <label htmlFor="topProduct">Top product</label>
+        <div className='input-container'>
+          <label htmlFor='topProduct'>Top product</label>
           <select
-            id="topProduct"
-            name="topProduct"
+            id='topProduct'
+            name='topProduct'
             value={topProduct && topProduct}
             onChange={(e) => setTopProduct(e.target.value)}
           >
@@ -126,18 +126,18 @@ const NewProductPage = () => {
           </select>
         </div>
 
-        <div className="input-container">
-          <label htmlFor="imageUpload">Choose a picture:</label>
+        <div className='input-container'>
+          <label htmlFor='imageUpload'>Choose a picture:</label>
           <input
-            name="imageUpload"
+            name='imageUpload'
             onChange={(e) => {
-              const filesArray = Object.values(e.target.files)
-              setFiles(filesArray)
+              const filesArray = Object.values(e.target.files);
+              setFiles(filesArray);
               // setPreview(filesArray)
               // setPreviewState(true)
             }}
-            type="file"
-            accept="image/*"
+            type='file'
+            accept='image/*'
             multiple
           />
         </div>
@@ -154,15 +154,15 @@ const NewProductPage = () => {
           imagesPath.map((element, index) => {
             return (
               <div key={index}>
-                <img src={`/${element.fileName}`} width="100" alt="product" />
+                <img src={`/${element.fileName}`} width='100' alt='product' />
                 <p>{element.originalname}</p>
               </div>
-            )
+            );
           })}
-        <button type="Submit">Create</button>
+        <button type='Submit'>Create</button>
       </form>
     </div>
-  )
-}
+  );
+};
 
-export default NewProductPage
+export default NewProductPage;
