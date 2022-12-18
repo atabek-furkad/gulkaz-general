@@ -4,5 +4,16 @@
 
   .dashboard-container {
     flex: 6;
+
+    .flex-container {
+      display: flex;
+    }
+
+    .flex-card {
+      display: flex;
+
+      .card {
+      }
+    }
   }
 }
