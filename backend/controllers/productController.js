@@ -127,6 +127,10 @@ function attachFiles(product, files) {
 async function deleteFiles(product) {
   await product.images.forEach((image) => {
     console.log(path.join(__dirname, '..', '..', 'uploads', image.fileName));
+    console.log(
+      'show me the path please',
+      path.join(__dirname, '..', '..', 'uploads', image.fileName)
+    );
     const unlinkFile = path.join(
       __dirname,
       '..',

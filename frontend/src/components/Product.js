@@ -1,9 +1,13 @@
-import React, { useContext, useEffect } from 'react'
-import { Link } from 'react-router-dom'
-import UserContext from '../context/UserContext'
+import React, { useContext } from 'react';
+import { Link } from 'react-router-dom';
+import UserContext from '../context/UserContext';
+import useImage from '../images/wall-frame.webp';
+import './styles/product.scss';
+import { BsFillDashCircleFill } from 'react-icons/bs';
+import { BsFillPencilFill } from 'react-icons/bs';
 
 const Product = ({ product }) => {
-  const { state } = useContext(UserContext)
+  const { state } = useContext(UserContext);
 
   const handleFormSubmit = async (id) => {
     const config = {
@@ -11,30 +15,40 @@ const Product = ({ product }) => {
       headers: {
         Authorization: `Bearer ${state.userInfo.token}`,
       },
-    }
-    await fetch(`/api/products/${id}`, config)
-  }
+    };
+    await fetch(`/api/products/${id}`, config);
+  };
 
   // const showImages = product.images.map((image) => image.slice(15))
 
   return (
-    <div>
-      <form
+    <main className='main-prod'>
+      <section
         onSubmit={() => {
-          handleFormSubmit(product._id)
+          handleFormSubmit(product._id);
         }}
+        className='product-container'
       >
-        {/* <Link to={`/products/${product._id}`}>{product.name}</Link> */}
+        <div className='productImg'>
+          <img src={useImage} alt='' width='100' className='img' />
+        </div>
+        <div className='footer'>
+          <button className='deleteBtn'>
+            <span>
+              <BsFillDashCircleFill className='icon' />
+              Delete
+            </span>
+          </button>
+          <Link to={`/profile/edit-product/${product._id}`} className='editBtn'>
+            <span>
+              <BsFillPencilFill className='icon' />
+              Edit
+            </span>
+          </Link>
+        </div>
+      </section>
+    </main>
+  );
+};
 
-        {/* {showImages?.slice(0, 1).map((image, index) => (
-          <img src={image} alt="product" key={index} height="100" />
-        ))} */}
-
-        <Link to={`/profile/edit-product/${product._id}`}>Edit</Link>
-        <button>Delete</button>
-      </form>
-    </div>
-  )
-}
-
-export default Product
+export default Product;

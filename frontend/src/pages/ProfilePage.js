@@ -1,47 +1,60 @@
-import React, { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
-import Product from '../components/Product'
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import Product from '../components/Product';
+import SideBar from '../components/dashboardSideBar/SideBar';
+import '../components/styles/product.scss';
+import { AiOutlineSearch } from 'react-icons/ai';
 
 const ProfilePage = () => {
-  const [products, setProducts] = useState([])
-  const [error, setError] = useState('')
-  const [loading, setLoading] = useState(false)
+  const [products, setProducts] = useState([]);
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchProducts = async () => {
-      setLoading(true)
+      setLoading(true);
       try {
-        const response = await fetch('/api/products')
+        const response = await fetch('/api/products');
         if (response.status >= 400 && response.status < 600) {
-          console.log(response)
-          throw new Error(response.statusText)
+          console.log(response);
+          throw new Error(response.statusText);
         }
-        const dataJson = await response.json()
-        setProducts(dataJson)
+        const dataJson = await response.json();
+        setProducts(dataJson);
       } catch (error) {
-        setError(error.message)
-        console.log('error', error)
+        setError(error.message);
+        console.log('error', error);
       } finally {
-        setLoading(false)
+        setLoading(false);
       }
-    }
-    fetchProducts()
-  }, [])
+    };
+    fetchProducts();
+  }, []);
 
   return (
-    <div className="ProfilePage">
-      <h1>Protected Admin Profile Page</h1>
-      {loading && <h2>Loading...</h2>}
-      {error && <h2>{error}</h2>}
-      <Link to="/profile/new-product">Create New Product</Link>
-      {products &&
-        products?.map((product) => (
-          <Product key={product._id} product={product} />
-        ))}
+    <main className='profile'>
+      <SideBar />
+      <div className='ProfilePage container'>
+        {loading && <h2>Loading...</h2>}
+        {error && <h2>{error}</h2>}
+        <div className='search'>
+          <span className='search-box'>
+            <AiOutlineSearch />
+            <input placeholder='Search....' />
+          </span>
+        </div>
+        <Link to='/profile/new-product'>Create New Product</Link>
+        <div className='flex-product'>
+          {products &&
+            products?.map((product) => (
+              <Product key={product._id} product={product} />
+            ))}
 
-      <div></div>
-    </div>
-  )
-}
+          <div></div>
+        </div>
+      </div>
+    </main>
+  );
+};
 
-export default ProfilePage
+export default ProfilePage;
