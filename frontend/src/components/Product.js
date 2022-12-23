@@ -30,7 +30,7 @@ const Product = ({ product }) => {
         className='product-container'
       >
         <div className='productImg'>
-          <img src={useImage} alt='' width='100' className='img' />
+          <img src={useImage} alt='product_img' className='img' />
         </div>
         <div className='footer'>
           <button className='deleteBtn'>

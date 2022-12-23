@@ -7,12 +7,23 @@
 
     .search {
       text-align: center;
+
       .search-box {
         background: #a09e9e;
+        text-align: center;
         padding: 1rem;
+        border-radius: 5px;
+
+        button,
         input {
-          padding: 0.5rem;
           border: none;
+          padding: 0.2rem;
+          background-color: transparent;
+        }
+
+        .search-icon {
+          font-size: 1.2rem;
+          margin-right: 10px;
         }
       }
     }
@@ -24,16 +35,18 @@
   }
 }
 
+// Product Style
 .main-prod {
   background: #d1d1d1;
   .product-container {
     background: #a09e9e;
     display: block;
-    margin: 1.2rem;
-
+    margin: 1rem;
+    width: 210px;
+    border-radius: 5px;
     .productImg {
       .img {
-        width: 200px;
+        width: 210px;
         height: 150px;
       }
     }
@@ -45,32 +58,30 @@
       padding-left: 1rem;
       text-align: center;
 
+      .deleteBtn,
+      .editBtn {
+        color: #000;
+        border-radius: 5px;
+        padding: 0.3rem;
+        width: 70px;
+        text-decoration: none;
+      }
+
       .icon {
         margin-right: 0.33rem;
+        font-size: 13px;
       }
       .editBtn {
         background: #fdfdfe;
-        text-decoration: none;
-        padding: 0.3rem;
-        width: 70px;
+        text-align: center;
       }
 
       .deleteBtn {
         background: #fdfdfe;
         text-decoration: none;
         border: none;
-        padding: 0.3rem;
-        width: 70px;
-        // span {
-        //   padding: 0 0.33rem;
-        // }
+        text-align: center;
       }
     }
   }
 }
-
-// {/* <Link to={`/products/${product._id}`}>{product.name}</Link> */}
-
-//           {/* {showImages?.slice(0, 1).map((image, index) => (
-//           <img src={image} alt="product" key={index} height="100" />
-//         ))} */}

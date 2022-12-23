@@ -39,7 +39,9 @@ const ProfilePage = () => {
         {error && <h2>{error}</h2>}
         <div className='search'>
           <span className='search-box'>
-            <AiOutlineSearch />
+            <button>
+              <AiOutlineSearch className='search-icon' />
+            </button>
             <input placeholder='Search....' />
           </span>
         </div>
