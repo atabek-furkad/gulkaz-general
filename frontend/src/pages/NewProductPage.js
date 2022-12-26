@@ -4,6 +4,8 @@ import UserContext from '../context/UserContext';
 import useFetch from '../customHooks/useFetch';
 import ProductForm from '../components/ProductForm';
 import BackButton from '../components/BackButton';
+import SideBar from '../components/dashboardSideBar/SideBar';
+import '../components/styles/productform.scss';
 
 const NewProductPage = () => {
   const { state } = useContext(UserContext);
@@ -62,11 +64,14 @@ const NewProductPage = () => {
   console.log('what is the product, from New product', product);
 
   return (
-    <div className='NewProductPage'>
-      <BackButton />
-      <h1>New Product Page</h1>
-      <ProductForm {...allProps} />
-    </div>
+    <main className='profile'>
+      <SideBar />
+      <div className='NewProductPage container'>
+        <BackButton />
+        <h1>New Product Page</h1>
+        <ProductForm {...allProps} />
+      </div>
+    </main>
   );
 };
 

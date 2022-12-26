@@ -7,6 +7,7 @@ import { BsPersonCircle } from 'react-icons/bs';
 import { BiLogOut } from 'react-icons/bi';
 
 import './sidebar.scss';
+import { Link } from 'react-router-dom';
 
 const SideBar = () => {
   return (
@@ -23,10 +24,15 @@ const SideBar = () => {
               <BsFolder2Open className='icon' />
               <span>Show All Product</span>
             </li>
-            <li>
-              <FiPlusCircle className='icon' />
-              <span>Add Product</span>
-            </li>
+            <Link
+              to='/profile/new-product'
+              style={{ textDecoration: 'none', color: 'black' }}
+            >
+              <li>
+                <FiPlusCircle className='icon' />
+                <span>Add Product</span>
+              </li>
+            </Link>
             <li>
               <BsCloudArrowUpFill className='icon' />
               <span>Update Product</span>

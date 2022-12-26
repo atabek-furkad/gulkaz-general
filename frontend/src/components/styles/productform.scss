@@ -1,0 +1,33 @@
+.form-container {
+  background-color: #ccc;
+
+  form {
+    margin: 0;
+    .container {
+      margin: 0 2rem;
+
+      .flex-container {
+        display: flex;
+        flex-wrap: wrap;
+        .input-container {
+          padding: 1rem 0;
+          margin-right: 5rem;
+          display: flex;
+          align-items: center;
+          justify-self: end;
+          input,
+          select {
+            text-decoration: none;
+            border: none;
+            background: none;
+            border-bottom: 1px solid #000;
+            // padding-right: 5px;
+          }
+        }
+        .center {
+          text-align: start;
+        }
+      }
+    }
+  }
+}
