@@ -29,8 +29,9 @@ const ProductForm = ({
         <div className='container'>
           <div className='flex-container'>
             <div className='input-container'>
-              <label htmlFor='name'>Name</label>
+              <label htmlFor='name'>Name:</label>
               <input
+                className='input-style'
                 id='name'
                 name='name'
                 type='text'
@@ -39,7 +40,7 @@ const ProductForm = ({
               />
             </div>
             <div className='input-container'>
-              <label htmlFor='topProduct'>Top product</label>
+              <label htmlFor='topProduct'>Top product:</label>
               <select
                 id='topProduct'
                 name='topProduct'
@@ -55,8 +56,9 @@ const ProductForm = ({
 
           <div className='flex-container'>
             <div className='input-container'>
-              <label htmlFor='category'>Category</label>
+              <label htmlFor='category'>Category:</label>
               <input
+                className='input-style'
                 id='category'
                 name='category'
                 type='text'
@@ -65,8 +67,9 @@ const ProductForm = ({
               />
             </div>
             <div className='input-container'>
-              <label htmlFor='countInStock'>CountInStock</label>
+              <label htmlFor='countInStock'>CountInStock:</label>
               <input
+                className='input-style'
                 id='countInStock'
                 name='countInStock'
                 type='number'
@@ -78,8 +81,9 @@ const ProductForm = ({
 
           <div className='flex-container'>
             <div className='input-container'>
-              <label htmlFor='price'>Price</label>
+              <label htmlFor='price'>Price:</label>
               <input
+                className='input-style'
                 id='price'
                 name='price'
                 type='number'
@@ -88,55 +92,80 @@ const ProductForm = ({
               />
             </div>
             <div className='input-container center'>
-              <label htmlFor='description'>Description</label>
-              <br />
-              <textarea
-                id='description'
-                name='description'
-                type='text'
-                value={product.description}
-                onChange={handleInputChange}
-                row='4'
-                cols='50'
-              />
+              <label htmlFor='description'>Description:</label>
+              {/* <input type='text' /> */}
             </div>
           </div>
-
-          <div className='input-container'>
-            {/* {uploading && <h2>Uploading...</h2>} */}
-            <label htmlFor='imageUpload'>Choose a picture:</label>
-            <input
-              type='file'
-              id='imageUpload'
-              name='imageUpload'
-              multiple='multiple'
-              onChange={(e) => {
-                const filesArray = Object.values(e.target.files);
-                setFiles(filesArray);
-              }}
-              accept='image/*'
-              // accept="image/png, image/jpeg, image/png"
-              // onChange={uploadFileHandler}
+          <div className='flex-container'>
+            <textarea
+              id='description'
+              className='description'
+              name='description'
+              type='text'
+              placeholder='write description less than 500 words'
+              value={product.description}
+              onChange={handleInputChange}
+              row='4'
+              cols='50'
             />
           </div>
-          {imagesPath &&
-            imagesPath.map((element, index) => {
-              return (
-                <div key={index}>
-                  <img src={`/${element.fileName}`} width='100' alt='product' />
-                  <p>{element.originalname}</p>
-                </div>
-              );
-            })}
-          <button type='Submit'>Create</button>
-          <button
-            onClick={(e) => {
-              e.preventDefault();
-              navigate('/profile');
-            }}
-          >
-            Cancel
-          </button>
+
+          {/* Image container */}
+          <div className='flex-container'>
+            {/* {uploading && <h2>Uploading...</h2>} */}
+            <div className='input-container'>
+              <label htmlFor='imageUpload'>Choose a picture:</label>
+              <input
+                type='file'
+                id='imageUpload'
+                name='imageUpload'
+                multiple='multiple'
+                onChange={(e) => {
+                  const filesArray = Object.values(e.target.files);
+                  setFiles(filesArray);
+                }}
+                accept='image/*'
+                // accept="image/png, image/jpeg, image/png"
+                // onChange={uploadFileHandler}
+              />
+            </div>
+
+            {/* Start button */}
+            <div className='input-container'>
+              <button type='Submit' className='create-btn'>
+                Create
+              </button>
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  navigate('/profile');
+                }}
+                className='cancel-btn'
+              >
+                Cancel
+              </button>
+            </div>
+            {/* End Button */}
+          </div>
+
+          <div className='img-container'>
+            {/* Image path */}
+            {imagesPath &&
+              imagesPath.map((element, index) => {
+                return (
+                  <div key={index}>
+                    <img
+                      src={`/${element.fileName}`}
+                      width='100'
+                      alt='product'
+                      className='img-product'
+                    />
+                    <p>{element.originalname}</p>
+                  </div>
+                );
+              })}
+            {/* End Image path */}
+          </div>
         </div>
       </form>
     </div>

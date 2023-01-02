@@ -5,7 +5,8 @@ import useFetch from '../customHooks/useFetch';
 import ProductForm from '../components/ProductForm';
 import BackButton from '../components/BackButton';
 import SideBar from '../components/dashboardSideBar/SideBar';
-import '../components/styles/productform.scss';
+// import '../components/styles/productform.scss';
+import '../components/styles/newproductpage.scss';
 
 const NewProductPage = () => {
   const { state } = useContext(UserContext);
@@ -67,7 +68,7 @@ const NewProductPage = () => {
     <main className='profile'>
       <SideBar />
       <div className='NewProductPage container'>
-        <BackButton />
+        {/* <BackButton /> */}
         <h1>New Product Page</h1>
         <ProductForm {...allProps} />
       </div>
