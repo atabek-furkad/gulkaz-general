@@ -7,7 +7,7 @@
 
     .search {
       text-align: center;
-
+      padding-bottom: 1.5rem;
       .search-box {
         background: #a09e9e;
         text-align: center;
@@ -38,6 +38,7 @@
 // Product Style
 .main-prod {
   background: #d1d1d1;
+  border-radius: var(--radius);
   .product-container {
     background: #a09e9e;
     display: block;

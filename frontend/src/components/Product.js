@@ -19,7 +19,7 @@ const Product = ({ product }) => {
     await fetch(`/api/products/${id}`, config);
   };
 
-  // const showImages = product.images.map((image) => image.slice(15))
+  const showImages = product.images;
 
   return (
     <main className='main-prod'>
@@ -30,7 +30,14 @@ const Product = ({ product }) => {
         className='product-container'
       >
         <div className='productImg'>
-          <img src={useImage} alt='product_img' className='img' />
+          {showImages?.slice(0, 1).map((element, index) => (
+            <img
+              src={`/${element.fileName}`}
+              key={index}
+              alt='product_img'
+              className='img'
+            />
+          ))}
         </div>
         <div className='footer'>
           <button className='deleteBtn'>

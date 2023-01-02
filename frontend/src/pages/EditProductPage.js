@@ -5,6 +5,7 @@ import UserContext from '../context/UserContext';
 import useFetch from '../customHooks/useFetch';
 import ProductForm from '../components/ProductForm';
 import BackButton from '../components/BackButton';
+import SideBar from '../components/dashboardSideBar/SideBar';
 
 const EditProductPage = () => {
   const params = useParams();
@@ -92,11 +93,14 @@ const EditProductPage = () => {
   };
 
   return (
-    <div>
-      <BackButton />
-      <h1>Edit Product</h1>
-      <ProductForm {...allProps} />
-    </div>
+    <main className='profile'>
+      <SideBar />
+      <div className='NewProductPage container'>
+        {/* <BackButton /> */}
+        <h1>Edit Product</h1>
+        <ProductForm {...allProps} />
+      </div>
+    </main>
   );
 };
 

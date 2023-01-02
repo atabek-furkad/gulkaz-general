@@ -45,7 +45,6 @@ const ProfilePage = () => {
             <input placeholder='Search....' />
           </span>
         </div>
-        <Link to='/profile/new-product'>Create New Product</Link>
         <div className='flex-product'>
           {products &&
             products?.map((product) => (

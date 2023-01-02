@@ -1,3 +1,15 @@
+:root {
+  /* green used for button */
+  --clr-green-dark: hsl(125, 67%, 44%);
+  --clr-green-light: hsl(125, 71%, 66%);
+  /* red used for button */
+  --clr-red-dark: hsl(360, 67%, 44%);
+  --clr-red-light: hsl(360, 71%, 66%);
+  /* Radius */
+  --radius: 0.25rem;
+  --gap: 1.2rem;
+}
+
 * {
   padding: 0;
   margin: 0;

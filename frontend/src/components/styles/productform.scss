@@ -24,6 +24,12 @@
             font-size: 20px;
           }
 
+          input::file-selector-button {
+            border: none;
+            padding: 5px;
+            border-radius: var(--radius);
+          }
+
           .input-style,
           select {
             width: 180px;
@@ -75,6 +81,7 @@
           width: 100px;
           min-height: 80px;
           border-radius: 3px;
+          border: 1px solid #fff;
         }
       }
     }
