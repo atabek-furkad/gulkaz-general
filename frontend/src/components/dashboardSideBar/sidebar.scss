@@ -8,6 +8,18 @@
 
     ul {
       list-style: none;
+      text-decoration: none;
+
+      .active {
+        background-color: red;
+        // color: blue;
+        color: #000;
+      }
+
+      .dashboard {
+        text-decoration: none;
+        color: #000;
+      }
 
       p {
         font-weight: bold;
