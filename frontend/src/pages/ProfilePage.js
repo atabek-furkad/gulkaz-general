@@ -4,6 +4,8 @@ import Product from '../components/Product';
 import SideBar from '../components/dashboardSideBar/SideBar';
 import '../components/styles/product.scss';
 import { AiOutlineSearch } from 'react-icons/ai';
+import { TbArrowBigLeftLine } from 'react-icons/tb';
+import { TbArrowBigRightLine } from 'react-icons/tb';
 
 const ProfilePage = () => {
   const [products, setProducts] = useState([]);
@@ -44,14 +46,38 @@ const ProfilePage = () => {
             </button>
             <input placeholder='Search....' />
           </span>
+          <span className='filter-search'>
+            <p>2 Products Found</p>
+          </span>
+          <hr />
+          <span className='sort-product'>
+            Sort by:
+            <select name='name' id='product'>
+              <option value='volvo'>Price Lowest</option>
+              <option value='saab'>Price Hightest</option>
+              <option value='opel'>Name A - Z</option>
+              <option value='audi'>Name Z - A</option>
+            </select>
+          </span>
         </div>
         <div className='flex-product'>
           {products &&
             products?.map((product) => (
               <Product key={product._id} product={product} />
             ))}
-
           <div></div>
+        </div>
+        <div className='pagination-cont'>
+          <div className='cont'>
+            <span className='icon-arrow'>
+              <TbArrowBigLeftLine />
+              <button>Prev</button>
+            </span>
+            <span className='icon-arrow'>
+              <button>Next</button>
+              <TbArrowBigRightLine />
+            </span>
+          </div>
         </div>
       </div>
     </main>

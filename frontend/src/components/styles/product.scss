@@ -6,12 +6,16 @@
     flex: 6;
 
     .search {
+      margin-right: 1.3rem;
       text-align: center;
       padding-bottom: 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       .search-box {
         background: #a09e9e;
         text-align: center;
-        padding: 1rem;
+        padding: 0.5rem;
         border-radius: 5px;
 
         button,
@@ -26,11 +30,50 @@
           margin-right: 10px;
         }
       }
+      hr {
+        width: 350px;
+        border-top: 1px solid #000;
+      }
     }
 
     .flex-product {
       display: flex;
       flex-wrap: wrap;
+    }
+
+    .pagination-cont {
+      margin: 2rem 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      .cont {
+        background: #c6c5c5;
+        padding: 0.8rem;
+        border-radius: var(--radius);
+        display: flex;
+
+        .icon-arrow {
+          background: #fdfdfe;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin: 0 0.5rem;
+          padding: 0.7rem;
+          border-radius: var(--radius);
+          width: 120px;
+
+          button {
+            text-decoration: none;
+            border: none;
+            background: transparent;
+            margin: 0 0.5rem;
+          }
+        }
+
+        .icon-arrow:hover {
+          background: #e3e3e3;
+        }
+      }
     }
   }
 }
@@ -66,6 +109,11 @@
         padding: 0.3rem;
         width: 70px;
         text-decoration: none;
+      }
+
+      .deleteBtn:hover,
+      .editBtn:hover {
+        background: #d1d1d1;
       }
 
       .icon {
